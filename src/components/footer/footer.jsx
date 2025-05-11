@@ -17,14 +17,19 @@ export default function Footer() {
                 theme === "dark" ? "bg-black" : "bg-white"
             )}
         >
-            <IconButton className="text-black bg-slate-300 hover:bg-slate-500" onClick={() => window.open("https://github.com/nimjeprathamesh", "_blank")}>
-                <GitHubIcon />
+            <IconButton
+                className="bg-white text-black hover:bg-slate-500 rounded-full p-2"
+                style={{ color: "#fff" }}
+                onClick={() => window.open("https://github.com/nimjeprathamesh", "_blank")}
+            >
+                <GitHubIcon fontSize="inherit" />
             </IconButton>
             <IconButton
-                className="text-[#08409E] bg-slate-300 hover:bg-slate-500"
+                className="text-[#08409E] bg-white hover:bg-slate-500"
+                style={{ color: "#fff" }}
                 onClick={() => window.open("https://www.linkedin.com/in/prathamesh-nimje-94b43821a/", "_blank")}
             >
-                <LinkedInIcon />
+                <LinkedInIcon fontSize="inherit" />
             </IconButton>
             <IconButton
                 className="text-[#08409E] bg-slate-300 hover:bg-slate-500"

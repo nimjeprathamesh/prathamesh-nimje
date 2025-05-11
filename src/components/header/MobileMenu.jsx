@@ -117,7 +117,7 @@ export default function MobileMenu() {
               }}
             />
             <Footer />
-            <CustomizedSwitches />
+            {/* <CustomizedSwitches /> */}
           </div>
         </SidebarBody>
       </Sidebar>

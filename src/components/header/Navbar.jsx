@@ -57,6 +57,7 @@ export default function Navbar({className}) {
                 <Button
                     title="Resume"
                     className='px-4 py-2 rounded-full'
+                    redirectUrl="/pdf/Prathamesh_Nimje_Resume.pdf"
                 />
             </Menu>
         </div>

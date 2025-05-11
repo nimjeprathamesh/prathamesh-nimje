@@ -35,7 +35,7 @@ export default function Header() {
             <div
                 className="hidden sm:fixed sm:right-0 sm:top-7 sm:ml-auto md:flex md:top-8 md:right-0 lg:right-8 xl:right-8 2xl:right-8"
             >
-                <CustomizedSwitches />
+                {/* <CustomizedSwitches /> */}
             </div>
         </div>
     );
