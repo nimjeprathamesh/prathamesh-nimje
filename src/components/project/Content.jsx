@@ -24,7 +24,7 @@ export default function Content({words, heading}) {
                 )}
             />
             <div
-                className="w-full flex flex-col justify-between mt-12 gap-12 2xl:flex 2xl:flex-row 2xl:px-96 2xl:gap-12 xl:flex xl:flex-row xl:gap-12 lg:flex lg:flex-row lg:gap-12 md:flex md:flex-col md:gap-32"
+                className="w-full flex flex-col justify-between mt-12 gap-12 2xl:flex 2xl:flex-row 2xl:px-28 2xl:gap-12 xl:flex xl:flex-row xl:gap-12 lg:flex lg:flex-row lg:gap-12 md:flex md:flex-col md:gap-32"
             >
                 <ImageSection
                     src="/images/tms.png"
@@ -41,7 +41,7 @@ export default function Content({words, heading}) {
                 />
             </div>
             <div
-                className="w-full flex flex-col justify-between mt-24 gap-12 2xl:flex 2xl:flex-row-reverse 2xl:px-96 2xl:gap-12 xl:flex xl:flex-row-reverse xl:gap-12 lg:flex lg:flex-row-reverse lg:gap-12 md:flex md:flex-col md:gap-32"
+                className="w-full flex flex-col justify-between mt-24 gap-12 2xl:flex 2xl:flex-row-reverse 2xl:px-28 2xl:gap-12 xl:flex xl:flex-row-reverse xl:gap-12 lg:flex lg:flex-row-reverse lg:gap-12 md:flex md:flex-col md:gap-32"
             >
                 <ImageSection
                     src="/images/challenges-app.png"
@@ -58,7 +58,7 @@ export default function Content({words, heading}) {
                 />
             </div>
             <div
-                className="w-full flex flex-col justify-between mt-12 gap-12 2xl:flex 2xl:flex-row 2xl:px-96 2xl:gap-12 xl:flex xl:flex-row xl:gap-12 lg:flex lg:flex-row lg:gap-12 md:flex md:flex-col md:gap-32"
+                className="w-full flex flex-col justify-between mt-12 gap-12 2xl:flex 2xl:flex-row 2xl:px-28 2xl:gap-12 xl:flex xl:flex-row xl:gap-12 lg:flex lg:flex-row lg:gap-12 md:flex md:flex-col md:gap-32"
             >
                 <ImageSection
                     src="/images/food-order.png"
@@ -75,7 +75,7 @@ export default function Content({words, heading}) {
                 />
             </div>
             <div
-                className="w-full flex flex-col justify-between mt-24 gap-12 2xl:flex 2xl:flex-row-reverse 2xl:px-96 2xl:gap-12 xl:flex xl:flex-row-reverse xl:gap-12 lg:flex lg:flex-row-reverse lg:gap-12 md:flex md:flex-col md:gap-32"
+                className="w-full flex flex-col justify-between mt-24 gap-12 2xl:flex 2xl:flex-row-reverse 2xl:px-28 2xl:gap-12 xl:flex xl:flex-row-reverse xl:gap-12 lg:flex lg:flex-row-reverse lg:gap-12 md:flex md:flex-col md:gap-32"
             >
                 <ImageSection
                     src="/images/event-creation.png"
