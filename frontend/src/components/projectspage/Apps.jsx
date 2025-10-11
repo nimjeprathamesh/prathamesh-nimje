@@ -1,7 +1,7 @@
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext } from "react";
-import { MyContext } from "../../Context/Context";
+import { MyContext } from "@/Context/Context";
 
 const Apps = ({ data }) => {
     const { theme } = useContext(MyContext);

@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { MyContext } from "../../Context/Context";
+import { MyContext } from "@/Context/Context";
 
 const WorkSteps = ({ data, style }) => {
   const [hover, setHover] = useState(false);

@@ -1,13 +1,13 @@
-import Introduction from "../components/introduction/Introduction";
-import Profile from "../components/profile/Profile";
-import WorkProcess from "../components/workProcess/WorkProcess";
-import Portfolio from "../components/portfolio/Portfolio";
-import Profession from "../components/profession/Profession";
-import Contact from "../components/contact/Contact";
+import Introduction from "@/components/introduction/Introduction";
+import Profile from "@/components/profile/Profile";
+import WorkProcess from "@/components/workProcess/WorkProcess";
+import Portfolio from "@/components/portfolio/Portfolio";
+import Profession from "@/components/profession/Profession";
+import Contact from "@/components/contact/Contact";
 import { useContext } from "react";
-import { MyContext } from "../Context/Context";
+import { MyContext } from "@/Context/Context";
 import { ToastContainer } from "react-toastify";
-import Skills from "../components/skills/Skills";
+import Skills from "@/components/skills/Skills";
 
 const Home = () => {
   const { theme } = useContext(MyContext);

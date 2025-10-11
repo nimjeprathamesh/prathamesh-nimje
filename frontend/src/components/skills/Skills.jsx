@@ -2,8 +2,8 @@
 
 import { useContext, useState } from "react";
 import { FaCode, FaLayerGroup, FaDatabase, FaTools } from "react-icons/fa";
-import { MyContext } from "../../Context/Context";
-import { skillCategories } from "../../utils/constants";
+import { MyContext } from "@/Context/Context";
+import { skillCategories } from "@/utils/constants";
 
 export default function Skills() {
     const { theme } = useContext(MyContext);

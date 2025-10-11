@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation";
 import { Link as ScrollLink } from "react-scroll";
 import { TiWeatherSunny } from "react-icons/ti";
 import { IoMoonOutline } from "react-icons/io5";
-import { MyContext } from "../../../Context/Context";
-import { navItems } from "../../../utils/constants.jsx";
-import logo from "../../../assets/logo.png";
+import { MyContext } from "@/Context/Context";
+import { navItems } from "@/utils/constants.jsx";
+import logo from "@/assets/logo.png";
 import Image from "next/image";
 
 const handleMenuClick = () => {

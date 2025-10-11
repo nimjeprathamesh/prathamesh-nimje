@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Projects from "./Projects";
-import { MyContext } from "../../Context/Context";
-import { projectData } from "../../utils/constants";
+import { MyContext } from "@/Context/Context";
+import { projectData } from "@/utils/constants";
 
 const Portfolio = () => {
   const { theme } = useContext(MyContext);

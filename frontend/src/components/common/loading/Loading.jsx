@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { HashLoader } from "react-spinners";
-import { MyContext } from "../../../Context/Context";
+import { MyContext } from "@/Context/Context";
 
 const Loading = () => {
   const { theme } = useContext(MyContext);

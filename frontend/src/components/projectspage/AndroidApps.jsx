@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Apps from "./Apps";
-import { MyContext } from "../../Context/Context";
-import { androidData } from "../../utils/constants";
+import { MyContext } from "@/Context/Context";
+import { androidData } from "@/utils/constants";
 
 const AndroidApps = () => {
     const { theme } = useContext(MyContext);

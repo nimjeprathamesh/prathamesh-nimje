@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import SocialMedia from "../common/socialMedia/SocialMedia";
-import { MyContext } from "../../Context/Context";
+import { MyContext } from "@/Context/Context";
 
 const Profile = () => {
   const { theme } = useContext(MyContext);

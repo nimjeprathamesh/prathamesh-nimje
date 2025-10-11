@@ -1,6 +1,6 @@
-import ProjectsPage from '../components/projectspage/ProjectsPage';
-import AndroidApps from '../components/projectspage/AndroidApps';
-import { MyContext } from '../Context/Context';
+import ProjectsPage from '@/components/projectspage/ProjectsPage';
+import AndroidApps from '@/components/projectspage/AndroidApps';
+import { MyContext } from '@/Context/Context';
 import { useContext } from 'react';
 
 export default function Projects() {

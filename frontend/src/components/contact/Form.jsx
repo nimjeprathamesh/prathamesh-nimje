@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { MyContext } from "../../Context/Context";
-import { telegramSVG } from "../../icons/icons";
+import { MyContext } from "@/Context/Context";
+import { telegramSVG } from "@/icons/icons";
 
 const Form = () => {
   const { theme, formData, handleChange, handleSubmit } = useContext(MyContext);

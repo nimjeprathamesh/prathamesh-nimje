@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { MyContext } from "../../Context/Context";
+import { MyContext } from "@/Context/Context";
 
 const Projects = ({ data }) => {
   const { theme } = useContext(MyContext);

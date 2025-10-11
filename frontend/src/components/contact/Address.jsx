@@ -2,7 +2,7 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState, useContext } from "react";
-import { MyContext } from "../../Context/Context";
+import { MyContext } from "@/Context/Context";
 
 const Address = ({ item }) => {
   const [hover, setHover] = useState(false);

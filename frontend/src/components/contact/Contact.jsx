@@ -2,8 +2,8 @@ import { useContext } from "react";
 import Address from "./Address";
 import Form from "./Form";
 import SocialMedia from "../common/socialMedia/SocialMedia";
-import { MyContext } from "../../Context/Context";
-import { addressData } from "../../utils/constants";
+import { MyContext } from "@/Context/Context";
+import { addressData } from "@/utils/constants";
 
 const Contact = () => {
   const { theme } = useContext(MyContext);

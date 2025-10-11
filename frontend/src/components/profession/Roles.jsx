@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, useContext } from "react";
-import { MyContext } from "../../Context/Context";
+import { MyContext } from "@/Context/Context";
 
 const Roles = ({ role }) => {
   const [mouseHover, setMouseHover] = useState(false);

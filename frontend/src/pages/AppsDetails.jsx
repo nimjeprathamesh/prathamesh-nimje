@@ -2,8 +2,8 @@ import { useParams } from 'react-router-dom';
 import { useContext } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { MyContext } from '../Context/Context';
-import { androidDetailsData } from '../utils/constants';
+import { MyContext } from '@/Context/Context';
+import { androidDetailsData } from '@/utils/constants';
 
 export default function AppsDetails() {
     const { id } = useParams();

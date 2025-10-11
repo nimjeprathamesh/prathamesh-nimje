@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Roles from "./Roles";
-import { MyContext } from "../../Context/Context";
-import { rolesData } from "../../utils/constants";
+import { MyContext } from "@/Context/Context";
+import { rolesData } from "@/utils/constants";
 
 const Profession = () => {
   const { theme } = useContext(MyContext);

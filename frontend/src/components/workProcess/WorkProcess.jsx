@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useContext } from "react";
-import { MyContext } from "../../Context/Context";
-import { tabs } from "../../utils/constants";
+import { MyContext } from "@/Context/Context";
+import { tabs } from "@/utils/constants";
 
 const WorkProcess = () => {
   const [activeTab, setActiveTab] = useState(1);

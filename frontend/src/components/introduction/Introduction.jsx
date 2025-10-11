@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import "./introduction.css";
 import InformationSummary from "./InformationSummary";
-import { MyContext } from "../../Context/Context";
-import { informationSummaryData } from "../../utils/constants";
+import { MyContext } from "@/Context/Context";
+import { informationSummaryData } from "@/utils/constants";
 
 const Introduction = () => {
   const { theme } = useContext(MyContext);

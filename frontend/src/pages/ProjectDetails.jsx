@@ -3,8 +3,8 @@ import { useContext } from "react";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { MyContext } from "../Context/Context";
-import { projectDetailsData } from "../utils/constants";
+import { MyContext } from "@/Context/Context";
+import { projectDetailsData } from "@/utils/constants";
 
 export default function ProjectDetails() {
     const { id } = useParams();

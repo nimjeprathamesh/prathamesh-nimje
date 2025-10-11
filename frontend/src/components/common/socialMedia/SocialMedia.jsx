@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { MyContext } from "../../../Context/Context";
-import { socialIcons } from "../../../utils/constants";
+import { MyContext } from "@/Context/Context";
+import { socialIcons } from "@/utils/constants";
 
 const SocialMedia = ({ position }) => {
   const { theme } = useContext(MyContext);

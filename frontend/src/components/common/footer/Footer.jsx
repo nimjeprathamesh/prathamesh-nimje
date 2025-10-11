@@ -1,7 +1,7 @@
 "use client"
 
 import { Link } from "react-scroll";
-import { navItems } from "../../../utils/constants.jsx";
+import { navItems } from "@/utils/constants.jsx";
 
 const copyrightYear = new Date().getFullYear();
 

@@ -9,10 +9,10 @@ import { RiNextjsLine } from "react-icons/ri";
 import { SiBootstrap, SiDigitalocean, SiExpress, SiIndeed, SiJavascript, SiMui, SiMysql, SiPhpmyadmin, SiPostman, SiTailwindcss, SiVercel, SiVite } from "react-icons/si";
 import { TbBrandReactNative } from "react-icons/tb";
 import { VscVscode } from "react-icons/vsc";
-import tms from "../assets/images/tms.png";
-import event from "../assets/images/event-creation.png";
-import challenge from "../assets/images/challenges-app.png";
-import food from "../assets/images/food-order.png";
+import tms from "@/assets/images/tms.png";
+import event from "@/assets/images/event-creation.png";
+import challenge from "@/assets/images/challenges-app.png";
+import food from "@/assets/images/food-order.png";
 
 export const navItems = [
     { id: 1, name: "Home", url: "introduction", icon: <BiHomeAlt fontWeight="bold" /> },
