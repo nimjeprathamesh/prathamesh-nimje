@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import serveStatic from "serve-static";
 import db from "./db/db.js";
-import FeedbackRoute from "./routes/feedbackRoute.js";
+import FeedbackRoute from "./routes/FeedbackRoute.js";
 
 const STATIC_PATH =
     process.env.NODE_ENV === "production"

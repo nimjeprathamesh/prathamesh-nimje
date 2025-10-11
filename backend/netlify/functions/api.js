@@ -13,6 +13,10 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/", (req, res) => {
+    res.send("Hello Prathamesh!");
+});
+
 app.use("/api", FeedbackRoute);
 
 app.get('/api/test', (req, res) => {
