@@ -11,12 +11,6 @@ import { navItems } from "@/utils/constants.jsx";
 import logo from "@/assets/logo.png";
 import Image from "next/image";
 
-const handleMenuClick = () => {
-  if (document.activeElement instanceof HTMLElement) {
-    document.activeElement.blur();
-  }
-};
-
 const NavBar = () => {
   const [position, setPosition] = useState(0);
   const pathname = usePathname();
@@ -28,11 +22,20 @@ const NavBar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleMenuClick = () => {
+    // Close the dropdown menu by removing focus
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  };
+
   const menu = navItems.map((item) => (
-    <li key={item.id} onMouseDown={(e) => e.preventDefault()}>
+    <li key={item.id}>
       {item.url.startsWith("/") ? (
         <Link
           href={item.url}
+          target="_blank"
+          rel="noopener noreferrer"
           className={`px-5 py-3 mx-1 ${theme === 'light'
               ? 'hover:text-picto-primary text-black'
               : 'hover:text-picto-primary text-white hover:bg-[#1E2939] hover:rounded-md'
@@ -154,7 +157,6 @@ const NavBar = () => {
 
           {/* Logo */}
           <ScrollLink
-            href="#introduction"
             to="introduction"
             smooth={true}
             duration={900}
@@ -163,7 +165,7 @@ const NavBar = () => {
             <Image
               src={logo}
               alt="logo"
-              width={56}  // Adjust based on your needs (h-14 = 56px)
+              width={56}
               height={56}
               className="h-8 sm:h-14 rounded-2xl"
             />

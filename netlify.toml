@@ -9,4 +9,3 @@
 # Optional: Environment variables
 [build.environment]
   NODE_VERSION = "18"
-  NEXT_PUBLIC_BACKEND_URL = "https://portfolio-backend-delta-two.vercel.app"
