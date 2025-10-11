@@ -108,7 +108,7 @@ const NavBar = () => {
 
   return (
     <div
-      className={`sticky top-0 z-50 transition-all duration-1000 ${theme === 'light'
+      className={`fixed top-0 z-50 transition-all duration-1000 w-full ${theme === 'light'
           ? position > 50
             ? "bg-soft-white border-b border-gray-300"
             : "bg-white border-white"
