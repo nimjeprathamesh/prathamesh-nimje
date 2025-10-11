@@ -4,7 +4,6 @@ import WorkProcess from "../components/workProcess/WorkProcess";
 import Portfolio from "../components/portfolio/Portfolio";
 import Profession from "../components/profession/Profession";
 import Contact from "../components/contact/Contact";
-import "../../index.css";
 import { useContext } from "react";
 import { MyContext } from "../Context/Context";
 import { ToastContainer } from "react-toastify";
