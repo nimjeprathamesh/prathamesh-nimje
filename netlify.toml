@@ -1,6 +1,6 @@
 [build]
   base = "frontend"
-  command = "npm run build"
+  command = "npm run build -- --debug"
   publish = ".next"
 
 [[plugins]]
@@ -9,3 +9,4 @@
 # Optional: Environment variables
 [build.environment]
   NODE_VERSION = "18"
+  NEXT_PUBLIC_BACKEND_URL = "https://portfolio-backend-delta-two.vercel.app"
