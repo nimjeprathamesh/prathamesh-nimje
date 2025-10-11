@@ -1,0 +1,29 @@
+[build]
+  # If you have a build command (like TypeScript compilation)
+  command = "npm install"
+  # Where your serverless functions are located
+  functions = "netlify/functions"
+  # Publish directory (not needed for backend only)
+  publish = "."
+
+[functions]
+  # Directory for your serverless functions
+  directory = "netlify/functions"
+  # Node version
+  node_bundler = "esbuild"
+
+# Redirect all requests to your serverless function
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+# Environment variables (configure these in Netlify dashboard)
+[context.production.environment]
+  NODE_ENV = "production"
