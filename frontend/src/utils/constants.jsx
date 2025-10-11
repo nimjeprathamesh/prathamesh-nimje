@@ -6,7 +6,7 @@ import { CgWorkAlt } from "react-icons/cg";
 import { FaCss3Alt, FaGitAlt, FaGithub, FaHtml5, FaNodeJs, FaReact } from "react-icons/fa";
 import { MdDesignServices, MdOutlineArticle, MdOutlineContactMail } from "react-icons/md";
 import { RiNextjsLine } from "react-icons/ri";
-import { SiBootstrap, SiDigitalocean, SiExpress, SiIndeed, SiJavascript, SiMui, SiMysql, SiPhpmyadmin, SiPostman, SiTailwindcss, SiVercel, SiVite } from "react-icons/si";
+import { SiBootstrap, SiDigitalocean, SiExpress, SiIndeed, SiJavascript, SiMui, SiMysql, SiNetlify, SiPhpmyadmin, SiPostman, SiTailwindcss, SiVercel, SiVite } from "react-icons/si";
 import { TbBrandReactNative } from "react-icons/tb";
 import { VscVscode } from "react-icons/vsc";
 import tms from "@/assets/images/tms.png";
@@ -154,6 +154,7 @@ export const skillCategories = {
         { name: "Vercel", icon: <SiVercel className="text-black" /> },
         { name: "Postman", icon: <SiPostman className="text-orange-400" /> },
         { name: "VS Code", icon: <VscVscode className="text-blue-500" /> },
+        { name: "Netlify", icon: <SiNetlify className="text-[#05BDBA]" /> },
     ],
 };
 
