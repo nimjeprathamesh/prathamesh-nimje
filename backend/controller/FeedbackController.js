@@ -24,15 +24,43 @@ export const AddFeedback = async (req, res) => {
             });
 
             const mailOptions = {
-                from: `"${name}" <${email}>`,
+                from: process.env.EMAIL_USER,
                 to: process.env.EMAIL_USER,
                 replyTo: email,
-                subject: subject,
+                subject: `New Feedback: ${subject}`,
                 html: `
-                    <p><strong>Name:</strong> ${name}</p>
-                    <p><strong>Email:</strong> ${email}</p>
-                    <p><strong>Subject:</strong> ${subject}</p>
-                    <p><strong>Message:</strong> ${message}</p>
+                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                        <div style="background: linear-gradient(135deg, #448EEB, #2243F0); padding: 20px; text-align: center; border-radius: 10px 10px 0 0;">
+                            <h1 style="color: white; margin: 0;">New Feedback Received</h1>
+                        </div>
+                        <div style="background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px;">
+                            <p style="font-size: 16px; color: #333; margin-bottom: 20px;">You have received new feedback from your website:</p>
+                            
+                            <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #2243F0;">
+                                <p style="margin: 0; font-size: 14px; color: #666;">From:</p>
+                                <p style="margin: 5px 0 0 0; font-size: 16px; color: #333; font-weight: bold;">${name}</p>
+                            </div>
+
+                            <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #2243F0;">
+                                <p style="margin: 0; font-size: 14px; color: #666;">Email:</p>
+                                <p style="margin: 5px 0 0 0; font-size: 16px; color: #333; font-weight: bold;">${email}</p>
+                            </div>
+
+                            <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 15px; border-left: 4px solid #2243F0;">
+                                <p style="margin: 0; font-size: 14px; color: #666;">Subject:</p>
+                                <p style="margin: 5px 0 0 0; font-size: 16px; color: #333; font-weight: bold;">${subject}</p>
+                            </div>
+
+                            <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #2243F0;">
+                                <p style="margin: 0; font-size: 14px; color: #666;">Message:</p>
+                                <p style="margin: 10px 0 0 0; font-size: 16px; color: #333; line-height: 1.6;">${message}</p>
+                            </div>
+
+                            <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+                            <p style="font-size: 12px; color: #999; text-align: center;">This is an automated email from Debtors App Feedback System</p>
+                            <p style="font-size: 12px; color: #999; text-align: center;">Reply directly to this email to respond to ${name}</p>
+                        </div>
+                    </div>
                 `
             };
 
