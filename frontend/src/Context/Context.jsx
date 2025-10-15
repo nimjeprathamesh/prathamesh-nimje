@@ -12,20 +12,20 @@ export const MyContextProvider = ({ children }) => {
         }
         return 'light';
     });
-
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         subject: '',
         message: ''
     });
-
+    const [loading, setLoading] = useState(false);
     const handleChange = (field) => (value) => {
         setFormData(prev => ({ ...prev, [field]: value }));
     };
 
     async function handleSubmit(event) {
         event.preventDefault();
+        setLoading(true);
 
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/addFeedback`, {
@@ -51,6 +51,8 @@ export const MyContextProvider = ({ children }) => {
             }
         } catch (error) {
             toast.error(error.message);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -67,7 +69,7 @@ export const MyContextProvider = ({ children }) => {
         setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
     };
 
-    const values = { theme, toggleTheme, formData, handleChange, handleSubmit };
+    const values = { theme, toggleTheme, formData, loading, handleChange, handleSubmit };
 
     return (
         <MyContext.Provider value={values}>

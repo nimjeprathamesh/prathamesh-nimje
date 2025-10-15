@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { MyContext } from "@/Context/Context";
 import { telegramSVG } from "@/icons/icons";
+import { ClipLoader } from "react-spinners";
 
 const Form = () => {
-  const { theme, formData, handleChange, handleSubmit } = useContext(MyContext);
+  const { theme, formData, loading, handleChange, handleSubmit } = useContext(MyContext);
 
   const commonClass = `input input-lg px-5 border-0 border-b-2 focus:outline-none focus:placeholder:text-picto-primary placeholder:text-[15px] md:placeholder:text-lg focus:border-picto-primary w-full rounded-none px-0 ${
     theme === 'light' 
@@ -57,7 +58,7 @@ const Form = () => {
             type="submit"
             className="btn gap-3 max-lg:mx-auto btn-primary rounded-sm mt-5 text-[13px] md:text-[16px] w-fit font-semibold lg:mt-12.5 p-2 md:px-4"
           >
-            Submit {telegramSVG}
+            {loading ? <ClipLoader color="#fff" size={30} /> : <>Submit {telegramSVG}</>}
           </button>
         </form>
       </div>
