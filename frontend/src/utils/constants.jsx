@@ -6,13 +6,15 @@ import { CgWorkAlt } from "react-icons/cg";
 import { FaCss3Alt, FaGitAlt, FaGithub, FaHtml5, FaNodeJs, FaReact } from "react-icons/fa";
 import { MdDesignServices, MdOutlineArticle, MdOutlineContactMail } from "react-icons/md";
 import { RiNextjsLine } from "react-icons/ri";
-import { SiBootstrap, SiDigitalocean, SiExpress, SiIndeed, SiJavascript, SiMui, SiMysql, SiNetlify, SiPhpmyadmin, SiPostman, SiTailwindcss, SiVercel, SiVite } from "react-icons/si";
+import { SiBootstrap, SiDigitalocean, SiExpress, SiIndeed, SiJavascript, SiMui, SiMysql, SiNetlify, SiPhpmyadmin, SiPostman, SiTailwindcss, SiVercel, SiVite, SiRender } from "react-icons/si";
 import { TbBrandReactNative } from "react-icons/tb";
 import { VscVscode } from "react-icons/vsc";
-import tms from "@/assets/images/tms.png";
-import event from "@/assets/images/event-creation.png";
-import challenge from "@/assets/images/challenges-app.png";
-import food from "@/assets/images/food-order.png";
+import debtor from '../assets/images/debtor.png';
+import mechanic from '../assets/images/mechanic.png';
+import tms from "../assets/images/tms.png";
+import event from "../assets/images/event-creation.png";
+import challenge from "../assets/images/challenges-app.png";
+import food from "../assets/images/food-order.png";
 
 export const navItems = [
     { id: 1, name: "Home", url: "introduction", icon: <BiHomeAlt fontWeight="bold" /> },
@@ -155,6 +157,7 @@ export const skillCategories = {
         { name: "Postman", icon: <SiPostman className="text-orange-400" /> },
         { name: "VS Code", icon: <VscVscode className="text-blue-500" /> },
         { name: "Netlify", icon: <SiNetlify className="text-[#05BDBA]" /> },
+        { name: "Render", icon: <SiRender className="text-[#05BDBA]" /> },
     ],
 };
 
@@ -210,7 +213,7 @@ export const tabs = [
 export const androidDetailsData = [
     {
         id: 1,
-        image: '/debtor.png',
+        image: debtor,
         logo: 'https://play-lh.googleusercontent.com/HVm-Hnmg8qaqkFaXasxn-mAxz87JWPplcEX_7cT_cRy8pmLCCHUNiiFIeLz_B2mVxqwxVBo4bHWGKGZk8gNlvg=w240-h480-rw',
         title: "My Debt Tracker",
         short_desc: "Track, manage & automate debtors & creditors for smarter business.",
@@ -220,7 +223,7 @@ export const androidDetailsData = [
     },
     {
         id: 2,
-        image: '/mechanic.png',
+        image: mechanic,
         logo: 'https://play-lh.googleusercontent.com/NjToYwGI2tpC6rxvkJeWgWL_XWIbCED_ayx-8EH11FcnIe7KE6aFlRbFEkB3EavJf06Bz0S6QREYI3nFk8_K=w240-h480-rw',
         title: "Mechanic Invoice Manager",
         short_desc: "Simplify business billing with Mechanic Invoice Manager Android App.",
