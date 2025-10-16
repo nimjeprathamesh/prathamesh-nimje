@@ -157,7 +157,7 @@ export const skillCategories = {
         { name: "Postman", icon: <SiPostman className="text-orange-400" /> },
         { name: "VS Code", icon: <VscVscode className="text-blue-500" /> },
         { name: "Netlify", icon: <SiNetlify className="text-[#05BDBA]" /> },
-        { name: "Render", icon: <SiRender className="text-[#05BDBA]" /> },
+        { name: "Render", icon: <SiRender className="text-black" /> },
     ],
 };
 
