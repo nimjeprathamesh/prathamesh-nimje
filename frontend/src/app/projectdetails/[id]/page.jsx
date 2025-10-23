@@ -24,7 +24,7 @@ export default function ProjectDetails({ params }) {
     }
 
     return (
-        <div className={`flex flex-col justify-center items-center gap-6 sm:gap-10 py-6 sm:py-10 px-4 sm:px-8 md:px-16 lg:px-32 ${theme === 'light' ? 'bg-white' : 'bg-gray-900'}`}>
+        <div className={`flex flex-col justify-center items-center gap-6 mt-[3%] sm:gap-10 py-6 sm:py-10 px-4 sm:px-8 md:px-16 lg:px-32 ${theme === 'light' ? 'bg-white' : 'bg-gray-900'}`}>
             <p className={`section-title text-center text-2xl sm:text-3xl md:text-4xl ${theme === 'light' ? 'text-black' : 'text-white'}`}>{project.title}</p>
             <Image
                 src={project.image}

@@ -71,7 +71,7 @@ export default function AppsDetails({ params }) {
     };
 
     return (
-        <div className={`flex flex-col items-center gap-6 sm:gap-10 py-6 sm:py-10 px-4 sm:px-8 md:px-16 lg:px-32 ${theme === 'light' ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}>
+        <div className={`flex flex-col items-center gap-6 mt-[5%] sm:gap-10 py-6 sm:py-10 px-4 sm:px-8 md:px-16 lg:px-32 ${theme === 'light' ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}>
             <img
                 src={project.image}
                 alt={`${project.title} image`}

@@ -36,6 +36,7 @@ const Portfolio = () => {
       <div className="text-center">
         <a
           href="/projects"
+          target="_blank"
           className="btn btn-primary py-3 px-6 mt-12.5 text-center text-[16px] font-semibold"
         >
           More Projects

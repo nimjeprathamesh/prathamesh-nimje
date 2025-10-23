@@ -213,7 +213,7 @@ export const tabs = [
 export const androidDetailsData = [
     {
         id: 1,
-        image: debtor,
+        image: "/debtor.png",
         logo: 'https://play-lh.googleusercontent.com/HVm-Hnmg8qaqkFaXasxn-mAxz87JWPplcEX_7cT_cRy8pmLCCHUNiiFIeLz_B2mVxqwxVBo4bHWGKGZk8gNlvg=w240-h480-rw',
         title: "My Debt Tracker",
         short_desc: "Track, manage & automate debtors & creditors for smarter business.",
@@ -223,7 +223,7 @@ export const androidDetailsData = [
     },
     {
         id: 2,
-        image: mechanic,
+        image: "/mechanic.png",
         logo: 'https://play-lh.googleusercontent.com/NjToYwGI2tpC6rxvkJeWgWL_XWIbCED_ayx-8EH11FcnIe7KE6aFlRbFEkB3EavJf06Bz0S6QREYI3nFk8_K=w240-h480-rw',
         title: "Mechanic Invoice Manager",
         short_desc: "Simplify business billing with Mechanic Invoice Manager Android App.",
