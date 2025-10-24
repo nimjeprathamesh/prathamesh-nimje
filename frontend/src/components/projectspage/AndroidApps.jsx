@@ -12,7 +12,7 @@ const AndroidApps = () => {
             id="portfolio"
         >
             <div className="xl:mb-17.5 mb-5">
-                <div className="max-sm:px-2 text-center mx-auto max-w-144.25">
+                <div className="max-sm:px-2 text-center mx-auto">
                     <p className={`section-title ${
                         theme === 'light' ? 'text-gray-900' : 'text-white'
                     }`}>

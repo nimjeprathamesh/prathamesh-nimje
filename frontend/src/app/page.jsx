@@ -10,6 +10,7 @@ import WorkProcess from "@/components/workProcess/WorkProcess";
 import { MyContext } from "@/Context/Context";
 import { useContext } from "react";
 import { ToastContainer } from "react-toastify";
+import "./globals.css";
 
 export default function Home() {
   const { theme } = useContext(MyContext);
