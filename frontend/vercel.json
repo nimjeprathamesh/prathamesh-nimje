@@ -1,0 +1,20 @@
+{
+    "rewrites": [
+        {
+            "source": "/projects",
+            "destination": "/"
+        },
+        {
+            "source": "/projectdetails/:id",
+            "destination": "/"
+        },
+        {
+            "source": "/appdetails/:id",
+            "destination": "/"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/"
+        }
+    ]
+}
