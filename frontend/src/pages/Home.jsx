@@ -9,7 +9,7 @@ import Skills from "../components/skills/Skills";
 import "../../index.css";
 import { MyContext } from "../Context/Context";
 import { ToastContainer } from "react-toastify";
-import Profile from "../components/profile/Profile.jsx";
+import Profile from "../components/profile/profile";
 
 const Home = () => {
   const { theme } = useContext(MyContext);
