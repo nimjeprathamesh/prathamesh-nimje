@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: your-portfolio-name
+    env: static
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+```
+
+## Or: Create `_redirects` File (Simpler)
+
+Render also supports a `_redirects` file. Create this file in your `public` folder (so it gets copied to the build output):
+
+**`public/_redirects`**
+```
+/*    /index.html   200
