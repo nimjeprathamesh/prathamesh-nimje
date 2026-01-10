@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { motion } from "framer-motion";
 import Introduction from "../components/introduction/Introduction";
-import Profile from "../components/profile/Profile";
 import WorkProcess from "../components/workProcess/WorkProcess";
 import Portfolio from "../components/portfolio/Portfolio";
 import Profession from "../components/profession/Profession";
@@ -10,6 +9,7 @@ import Skills from "../components/skills/Skills";
 import "../../index.css";
 import { MyContext } from "../Context/Context";
 import { ToastContainer } from "react-toastify";
+import Profile from "../components/profile/Profile.jsx";
 
 const Home = () => {
   const { theme } = useContext(MyContext);
