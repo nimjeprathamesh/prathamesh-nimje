@@ -7,7 +7,7 @@ import { RiNextjsLine } from "react-icons/ri";
 import { SiBootstrap, SiDigitalocean, SiExpress, SiIndeed, SiJavascript, SiMui, SiMysql, SiNetlify, SiPhpmyadmin, SiPostman, SiTailwindcss, SiVercel, SiVite, SiRender } from "react-icons/si";
 import { TbBrandReactNative } from "react-icons/tb";
 import { VscVscode } from "react-icons/vsc";
-import debtor from '../assets/images/debtor.png';
+import debtplay from '../assets/images/debtplay.png';
 import mechanic from '../assets/images/mechanic.png';
 import smart from '../assets/images/smart.png';
 import tms from "../assets/images/tms.png";
@@ -15,6 +15,12 @@ import event from "../assets/images/event-creation.png";
 import challenge from "../assets/images/challenges-app.png";
 import food from "../assets/images/food-order.png";
 import visitor from '../assets/images/visitor.png';
+import debtlogo from '../assets/images/debt-logo.png';
+import mechaniclogo from '../assets/images/mechanic-logo.png';
+import smartlogo from '../assets/images/smart-logo.png';
+import visitorlogo from '../assets/images/visitor-logo.png';
+import dancelogo from '../assets/images/dance-logo.png';
+import danceplay from '../assets/images/dance-play.png';
 
 export const navItems = [
     { id: 1, name: "Home", url: "introduction" },
@@ -110,7 +116,7 @@ export const rolesData = [
 export const androidData = [
     {
         id: 1,
-        image: 'https://play-lh.googleusercontent.com/HVm-Hnmg8qaqkFaXasxn-mAxz87JWPplcEX_7cT_cRy8pmLCCHUNiiFIeLz_B2mVxqwxVBo4bHWGKGZk8gNlvg=w240-h480-rw',
+        image: debtlogo,
         title: "My Debt Tracker",
         description:
             "No business can survive without a compact financial system.  Proper maintenance of financial records gives you a better control over your business. For the 21st Century digitally driven business environment, we've developed an app to help entrepreneurs automate and systematize the system of payment.  Developed with an objective of streamlining a business or occupation, it will make your financial foundation transparent and accurate.",
@@ -118,7 +124,7 @@ export const androidData = [
     },
     {
         id: 2,
-        image: 'https://play-lh.googleusercontent.com/NjToYwGI2tpC6rxvkJeWgWL_XWIbCED_ayx-8EH11FcnIe7KE6aFlRbFEkB3EavJf06Bz0S6QREYI3nFk8_K=w240-h480-rw',
+        image: mechaniclogo,
         title: "Mechanic Invoice Manager",
         description:
             "Invoices are official records of goods or services delivered, representing the amount payable by clients. With businesses rapidly shifting from manual billing to digital tools, e-invoicing has become essential for efficiency, accuracy, and automation. The Mechanic Invoice Manager Android App brings end-to-end invoicing, payment tracking, tax management, and financial reporting into one easy-to-use platform.",
@@ -126,7 +132,7 @@ export const androidData = [
     },
     {
         id: 3,
-        image: 'https://play-lh.googleusercontent.com/BW4lGdImxlYV3QyHBXMZu2kIMjZk2QASv8jw_sqyE0cY_pcc4kx7oFl95sBd1emORRZVmanm7EPHMP75wB1Ifw=w240-h480-rw',
+        image: smartlogo,
         title: "Smart Money Collection",
         description:
             "Introducing Smart Money Collection App, your ultimate solution for hassle-free cash collection. Designed for every Android user, this app is ideal for daily cash collection agents, small business owners, freelancers, and anyone who regularly handles payments. It simplifies money collection, streamlines operations, and eliminates the need for manual recording of transactions, receipts, and client data.",
@@ -134,11 +140,19 @@ export const androidData = [
     },
     {
         id: 4,
-        image: 'https://play-lh.googleusercontent.com/b8qE-m5Iuks42yYQLROLteUCDw1ufVs6dC91Z4xB7DjWRhqU51QXRLhAqKLjm1eqnDvm2lFU0YyO2BmLXdibww=w240-h480-rw',
+        image: visitorlogo,
         title: "Entry Book - Visitor Management",
         description:
             "Entry Book – Visitor Management Android App is a modern digital system that replaces outdated manual logbooks used in offices, buildings, factories, warehouses, and events. Instead of recording visitor names, contact details, and purpose of visit on paper, your security personnel or gatekeeper can enter the information directly into the app using a smartphone or tablet. This creates a professional, secure, and organized visitor management process with automatic digital ...",
         link: "https://play.google.com/store/apps/details?id=com.peccular.entrybook",
+    },
+    {
+        id: 5,
+        image: dancelogo,
+        title: "Dance Studio Management",
+        description:
+            "Streamline Your Dance Studio Operations with Ease! Running a dance class involves complex administrative tasks. Instead of overburdening your staff, upgrade to the Dance Studio Management App—a unified control system designed exclusively for dance instructors, studio owners, and professional dancers. Whether you manage a small hobby class or a large professional academy, this app automates your day-to-day operations, ensuring accuracy and saving productive hours ...",
+        link: "https://play.google.com/store/apps/details?id=com.peccular.dancestudiomanager",
     },
 ];
 
@@ -248,8 +262,8 @@ export const tabs = [
 export const androidDetailsData = [
     {
         id: 1,
-        image: debtor,
-        logo: 'https://play-lh.googleusercontent.com/HVm-Hnmg8qaqkFaXasxn-mAxz87JWPplcEX_7cT_cRy8pmLCCHUNiiFIeLz_B2mVxqwxVBo4bHWGKGZk8gNlvg=w240-h480-rw',
+        image: debtplay,
+        logo: debtlogo,
         title: "My Debt Tracker",
         short_desc: "Track, manage & automate debtors & creditors for smarter business.",
         description:
@@ -259,7 +273,7 @@ export const androidDetailsData = [
     {
         id: 2,
         image: mechanic,
-        logo: 'https://play-lh.googleusercontent.com/NjToYwGI2tpC6rxvkJeWgWL_XWIbCED_ayx-8EH11FcnIe7KE6aFlRbFEkB3EavJf06Bz0S6QREYI3nFk8_K=w240-h480-rw',
+        logo: mechaniclogo,
         title: "Mechanic Invoice Manager",
         short_desc: "Simplify business billing with Mechanic Invoice Manager Android App.",
         description:
@@ -269,7 +283,7 @@ export const androidDetailsData = [
     {
         id: 3,
         image: smart,
-        logo: 'https://play-lh.googleusercontent.com/BW4lGdImxlYV3QyHBXMZu2kIMjZk2QASv8jw_sqyE0cY_pcc4kx7oFl95sBd1emORRZVmanm7EPHMP75wB1Ifw=w240-h480-rw',
+        logo: smartlogo,
         title: "Smart Money Collection",
         short_desc: "Secure, easy cash collection with tracking & receipts.",
         description:
@@ -279,12 +293,22 @@ export const androidDetailsData = [
     {
         id: 4,
         image: visitor,
-        logo: 'https://play-lh.googleusercontent.com/b8qE-m5Iuks42yYQLROLteUCDw1ufVs6dC91Z4xB7DjWRhqU51QXRLhAqKLjm1eqnDvm2lFU0YyO2BmLXdibww=w240-h480-rw',
+        logo: visitorlogo,
         title: "Entry Book - Visitor Management",
         short_desc: "Ultimate solution for managing visitor entries efficiently and securely.",
         description:
             "Entry Book – Visitor Management Android App is a modern digital system that replaces outdated manual logbooks used in offices, buildings, factories, warehouses, and events. Instead of recording visitor names, contact details, and purpose of visit on paper, your security personnel or gatekeeper can enter the information directly into the app using a smartphone or tablet. This creates a professional, secure, and organized visitor management process with automatic digital records.\nIn today’s digital era, businesses increasingly rely on smart tools to streamline operations and enhance security. Entry Book is part of this digital transformation. It helps maintain accurate visitor history, improves monitoring, and gives your organization a more professional image from the moment someone walks in.\nWhat is Entry Book – Visitor Management Android App?\nEntry Book is a simple, user-friendly visitor management solution designed for Android devices. It helps you maintain paperless, secure, and automated records of everyone entering your premises. No special training is required—any security guard, receptionist, or gatekeeper can use it effortlessly. Suitable for small, medium, and large businesses, residential complexes, townships, events, and warehouses, it offers better accuracy, fewer errors, and improved visitor experience.\nKey Features\n1. Manual Visitor Check-in\nSecurity staff can enter basic visitor details such as name, contact number, company name, and purpose of visit. This digital process ensures the information is clean, clear, and securely stored. It enhances operational efficiency, compliance, and overall safety.\n2. Time & Attendance Logs\nEntry Book automatically logs check-in and check-out times for visitors, clients, and employees. You can see:\nExact time someone entered and exited\nHow long each person stayed\nDaily and weekly visitor summaries\nVisitor flow patterns and peak hours\nNumber of people currently inside the premises\nThis improves accountability, accuracy, and security while giving you valuable insights for planning and monitoring.\n3. Exportable Reports\nYou can instantly download organized visitor data, attendance logs, and activity summaries. These reports can be shared with management, HR, auditors, or security teams within seconds—making documentation and compliance effortless.\n4. Visitor History & Multi-Location Support\nWhether you manage a single office, an entire building, or multiple branches across locations, Entry Book gives you centralized visibility. You can track:\nVisitor activity across all locations\nDepartment-wise visits\nReal-time logs for audits\nHistorical records for decision-making\nThis makes it ideal for corporate offices, warehouses, service centers, residential buildings, and remote sites.\nBenefits\nEnhanced security through real-time digital logging\nIncreased accuracy with minimal chances of error\nFaster check-in process and improved visitor experience\nCentralized data storage and easy access anytime\nAutomatic reports for compliance and audits\nAffordable, easy to use, and quick to implement\nEntry Book helps maintain discipline, ensures transparency, and strengthens security. It is an essential tool for any organization that values safety, professionalism, and efficiency. Whether you need to track employee attendance, manage visitor flow, or maintain detailed access records, Entry Book offers a complete, reliable, and convenient digital solution.",
         link: "https://play.google.com/store/apps/details?id=com.peccular.entrybook",
+    },
+    {
+        id: 5,
+        image: danceplay,
+        logo: dancelogo,
+        title: "Dance Studio Management",
+        short_desc: "Ultimate solution for managing visitor entries efficiently and securely.",
+        description:
+            "Streamline Your Dance Studio Operations with Ease!\nRunning a dance class involves complex administrative tasks. Instead of overburdening your staff, upgrade to the Dance Studio Management App—a unified control system designed exclusively for dance instructors, studio owners, and professional dancers.\nWhether you manage a small hobby class or a large professional academy, this app automates your day-to-day operations, ensuring accuracy and saving productive hours.\nKey Features\n1. Centralized Admin Management\nTake full control of your studio with a secure and intuitive Admin Dashboard.\nComplete Authority: Create, update, and delete records 24/7.\nReal-time Analytics: View studio performance through instant reports.\nSecure Access: Multi-factor authentication with easy password recovery and session management.\n2. Efficient Student Management\nManage your student lifecycle from registration to graduation.\nDetailed Profiles: Store names, contact info, DOB, and dance levels.\nSmart Enrollment: Assign students to batches based on dance style, timing, and level (Beginner, Intermediate, Advanced).\nHistory Tracking: View individual student attendance and payment history in one click.\n3. Batch & Dance Style Customization\nOrganize your classes systematically.\nStyle Management: Create records for various styles like Hip-Hop, Classical, Contemporary, and more.\nInstructor Assignment: Assign specific teachers to batches and monitor their schedules.\nClass Optimization: Manage batches based on duration and student capacity.\n4. Attendance Tracking\nDitch the paper registers.\nManual Entry: Quickly mark attendance for every class session.\nHistory Logs: Generate detailed attendance reports for any student across multiple classes.\nEasy Sharing: Export and share attendance sheets directly from the app.\n5. Fees & Payment Management\nKeep your finances transparent and accurate.\nFlexible Fee Structure: Define monthly, package-based, or per-class fees.\nPayment Tracking: Record manual and online payments. Track due dates, partial payments, and full settlements.\nInvoicing: Generate professional invoices and receipts instantly.\n6. Reports & Analytics\nData-driven insights for better growth.\nAccess Admission Reports, Class-wise Attendance, Revenue Ready Reckoners, and Instructor Schedules at a glance.\nWhy Choose Dance Studio Management?\nHigh Performance: Dashboard loads quickly even with large student databases.\nTop-Tier Security: All admin data is encrypted with secure database access and regular backups.\nUser-Friendly UI: A clean, responsive design that works seamlessly on all Android devices.\nClarity & Transparency: Reduces human error and provides clear records for admin, parents, and students.\nTransform your dance school today! Download the Dance Studio Management app and focus more on the art of dance while we handle the administration.",
+        link: "https://play.google.com/store/apps/details?id=com.peccular.dancestudiomanager",
     },
 ];
 
