@@ -1,222 +1,135 @@
 import { useContext } from "react";
 import { motion } from "framer-motion";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MyContext } from "../../Context/Context";
 
-const Projects = ({ data }) => {
+const Projects = ({ data, index }) => {
   const { theme } = useContext(MyContext);
 
-  // Handler to stop event propagation
-  const handleButtonClick = (e) => {
-    e.stopPropagation();
+  // Card Par Click Karne Se Details Page Khulega
+  const handleCardClick = () => {
+    window.open(`/projectdetails/${data.id}`, '_blank');
   };
 
-  // Animation variants
-  const cardVariants = {
-    hover: {
-      y: -10,
-      transition: {
-        duration: 0.3,
-        ease: "easeOut"
-      }
+  // REDIRECTION BUG FIXED 🛠️
+  const handleLinkClick = (e, targetUrl) => {
+    e.stopPropagation(); // Card ke parent click event ko trigger hone se rokega
+    if (targetUrl) {
+      window.open(targetUrl, '_blank'); // Robust native manual redirection
     }
   };
 
-  const imageVariants = {
-    hover: {
-      scale: 1.05,
-      transition: {
-        duration: 0.4,
-        ease: "easeOut"
-      }
-    }
+  // Helper mapping script to push selective colored ambient aura blurs based on your project categories
+  const getProjectThemeGlow = (title) => {
+    if (!title) return "rgba(153, 41, 251, 0.14)";
+    const lowerTitle = title.toLowerCase();
+    if (lowerTitle.includes("tour") || lowerTitle.includes("management")) return "rgba(59, 130, 246, 0.14)"; // Blue shadow
+    if (lowerTitle.includes("event")) return "rgba(249, 115, 22, 0.14)";                                    // Orange-red shadow
+    if (lowerTitle.includes("challenge")) return "rgba(168, 85, 247, 0.14)";                                // Purple shadow
+    return "rgba(153, 41, 251, 0.14)";                                                                      // Brand default
   };
 
-  const categoryVariants = {
-    initial: { opacity: 0, x: -20 },
-    animate: { 
-      opacity: 1, 
-      x: 0,
-      transition: {
-        duration: 0.4,
-        delay: 0.1
-      }
-    }
-  };
-
-  const titleVariants = {
-    initial: { opacity: 0, y: 10 },
-    animate: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.4,
-        delay: 0.2
-      }
-    }
-  };
-
-  const descriptionVariants = {
-    initial: { opacity: 0, y: 10 },
-    animate: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.4,
-        delay: 0.3
-      }
-    }
-  };
-
-  const buttonContainerVariants = {
-    initial: { opacity: 0, y: 20 },
-    animate: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.4,
-        delay: 0.4,
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const buttonVariants = {
-    initial: { opacity: 0, x: -10 },
-    animate: { 
-      opacity: 1, 
-      x: 0,
-      transition: {
-        duration: 0.3
-      }
-    },
-    hover: {
-      scale: 1.05,
-      x: 5,
-      transition: {
-        duration: 0.2
-      }
-    },
-    tap: {
-      scale: 0.95
-    }
-  };
-
-  const iconVariants = {
-    hover: {
-      x: 5,
-      transition: {
-        duration: 0.2
-      }
-    }
-  };
+  const dynamicCardGlow = getProjectThemeGlow(data?.title);
 
   return (
-    <motion.div
-      className={`max-w-106 rounded-lg duration-300 transition-all cursor-pointer overflow-hidden ${
-        theme === 'light' 
-          ? 'outline-[#FFFFFF] shadow-gray-300 border border-gray-200 bg-white' 
-          : 'shadow-gray-900 border border-gray-700 bg-gray-800'
-      }`}
-      onClick={() => window.open(`/projectdetails/${data.id}`, '_blank')}
-      variants={cardVariants}
-      whileHover="hover"
-      initial="initial"
-      animate="animate"
+    /* 1. INVISIBLE PARENT WRAPPER FRAME (GLITCH ROOT FIX) 🛠️ */
+    <div 
+      className="w-full h-full relative group/master"
+      style={{ perspective: 1200 }}
     >
-      <motion.div 
-        className="overflow-hidden"
-        variants={imageVariants}
+      <motion.div
+        className={`w-full h-full rounded-2xl border flex flex-col overflow-hidden select-none cursor-pointer transition-colors duration-500 ${
+          theme === 'light' 
+            ? 'bg-white border-slate-200/80 shadow-md shadow-slate-100' 
+            : 'bg-slate-950/40 border-slate-800/60 shadow-[0_15px_35px_rgba(0,0,0,0.3)] backdrop-blur-md hover:border-slate-700/80'
+        }`}
+        onClick={handleCardClick}
+        
+        /* 2. HOVER DRIVEN BY STATIC MASTER CONTAINER FOR MAXIMUM STABILITY */
+        whileHover={{
+          y: -10,
+          scale: 1.03,
+          rotateX: -4,
+          rotateY: 4,
+          boxShadow: `0 20px 45px ${dynamicCardGlow}`
+        }}
+        whileTap={{ scale: 0.98 }}
+        style={{ transformStyle: "preserve-3d" }}
+        transition={{ type: "spring", stiffness: 150, damping: 18 }}
       >
-        <motion.img
-          src={data?.image}
-          alt={`${data?.title} image`}
-          className="rounded-tl-lg rounded-tr-lg w-full"
-          whileHover={{ scale: 1.1 }}
-          transition={{ duration: 0.4 }}
-        />
+        {/* Upper Section Layout: Aspect Image Mock Display Slot */}
+        <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-900 border-b border-inherit">
+          {/* Subtle Matte Dark Mask overlay gradient shadow */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent z-10 opacity-60 transition-opacity group-hover/master:opacity-20 pointer-events-none" />
+          
+          <motion.img
+            src={data?.image}
+            alt={`${data?.title} functional showcase visual layer`}
+            className="w-full h-full object-cover origin-center transition-transform duration-700 group-hover/master:scale-105"
+          />
+
+          {/* Absolute Floating Brand Category Chip Badge */}
+          <div className="absolute top-4 left-4 z-20">
+            <span className="text-[10px] font-extrabold uppercase tracking-widest px-3 py-1.5 rounded-md bg-slate-900/85 backdrop-blur-md text-slate-300 border border-white/10 shadow-sm">
+              {data?.category || "Web Application"}
+            </span>
+          </div>
+        </div>
+
+        {/* Lower Section Layout: Volumetric Text Content Block */}
+        <div className="p-6 sm:p-7 flex flex-col flex-1 justify-between space-y-5" style={{ transformStyle: "preserve-3d" }}>
+          <div className="space-y-2">
+            {/* 3D Surface Elevation Pop Out Offset */}
+            <h3 
+              className={`text-xl font-extrabold tracking-tight m-0 transition-colors duration-300 ${
+                theme === 'light' ? 'text-slate-900 group-hover/master:text-[#9929fb]' : 'text-white group-hover/master:text-[#cc59ff]'
+              }`}
+              style={{ transform: "translateZ(25px)" }}
+            >
+              {data?.title}
+            </h3>
+            
+            <p className={`text-sm leading-relaxed m-0 line-clamp-3 font-normal transition-colors duration-300 ${
+              theme === 'light' ? 'text-slate-600' : 'text-slate-300'
+            }`}>
+              {data?.description}
+            </p>
+          </div>
+
+          {/* Interactive Double Action Anchors Row Dock */}
+          <div className="flex items-center gap-3 pt-2" style={{ transform: "translateZ(15px)", zIndex: 30 }}>
+            <motion.button
+              onClick={(e) => handleLinkClick(e, data?.source)}
+              className={`flex-1 h-10 rounded-xl font-bold text-xs tracking-wide border transition-all duration-300 inline-flex items-center justify-center gap-2 cursor-pointer ${
+                theme === 'light' 
+                  ? 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100 hover:border-slate-300 shadow-xs' 
+                  : 'bg-slate-800/40 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white hover:border-slate-700 shadow-md'
+              }`}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <span>Repository</span>
+              <FontAwesomeIcon icon={faGithub} className="text-sm" />
+            </motion.button>
+
+            <motion.button
+              onClick={(e) => handleLinkClick(e, data?.link)}
+              className="flex-1 h-10 rounded-xl font-bold text-xs tracking-wide bg-gradient-to-r from-[#9929fb] via-[#b64aff] to-[#cc59ff] text-white shadow-md inline-flex items-center justify-center gap-2 relative overflow-hidden group/btn cursor-pointer border-0"
+              whileHover={{ y: -2, boxShadow: "0 8px 20px rgba(153, 41, 251, 0.35)" }}
+              whileTap={{ scale: 0.97 }}
+            >
+              {/* Shimmer sweep glass strip on hover */}
+              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-white/0 via-white/15 to-white/0 transform -translateX-full group-hover/btn:translate-x-full transition-transform duration-1000 ease-out" />
+              
+              <span className="relative z-10">Live Demo</span>
+              <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="text-[10px] relative z-10" />
+            </motion.button>
+          </div>
+        </div>
       </motion.div>
-
-      <div className="p-4 xs:p-8">
-        <motion.p 
-          className={`text-xs font-medium ${
-            theme === 'light' ? 'text-gray-400' : 'text-gray-400'
-          }`}
-          variants={categoryVariants}
-        >
-          {data?.category}
-        </motion.p>
-
-        <motion.p 
-          className={`text-md xxs:text-lg font-semibold pt-1 mb-3 ${
-            theme === 'light' ? 'text-gray-900' : 'text-white'
-          }`}
-          variants={titleVariants}
-        >
-          {data?.title}
-        </motion.p>
-
-        <motion.p
-          style={{ lineHeight: "20px", letterSpacing: "0%" }}
-          className={`text-xs xxs:text-[14px] text-wrap ${
-            theme === 'light' ? 'text-gray-600' : 'text-gray-300'
-          }`}
-          variants={descriptionVariants}
-        >
-          {data?.description}
-        </motion.p>
-
-        {/* Buttons wrapper */}
-        <motion.div 
-          className="flex flex-col sm:flex-row gap-3 mt-5"
-          variants={buttonContainerVariants}
-        >
-          <motion.a
-            href={data?.source}
-            target="_blank"
-            onClick={handleButtonClick}
-            className={`btn hover:border-picto-primary hover:text-picto-primary text-sm xs:text-[16px] font-semibold transition-all duration-300 py-3 px-6 w-full sm:w-auto text-center flex items-center justify-center gap-1 xs:gap-3 ${
-              theme === 'light' 
-                ? 'bg-white text-black border-gray-300' 
-                : 'bg-gray-700 text-white border-gray-600'
-            }`}
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-          >
-            <span>Source Code</span>
-            <motion.span
-              variants={iconVariants}
-            >
-              <FontAwesomeIcon icon={faGithub} size="lg" />
-            </motion.span>
-          </motion.a>
-
-          <motion.a
-            href={data?.link}
-            target="_blank"
-            onClick={handleButtonClick}
-            className={`btn hover:border-picto-primary hover:text-picto-primary text-sm xs:text-[16px] font-semibold transition-all duration-300 py-3 px-6 w-full sm:w-auto text-center flex items-center justify-center gap-1 xs:gap-3 ${
-              theme === 'light' 
-                ? 'bg-white text-black border-gray-300' 
-                : 'bg-gray-700 text-white border-gray-600'
-            }`}
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-          >
-            <span>Live Link</span>
-            <motion.span
-              variants={iconVariants}
-            >
-              <FontAwesomeIcon icon={faArrowRight} size="lg" />
-            </motion.span>
-          </motion.a>
-        </motion.div>
-      </div>
-    </motion.div>
+    </div>
   );
 };
 

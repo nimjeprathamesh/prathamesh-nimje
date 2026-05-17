@@ -10,119 +10,128 @@ import "../../index.css";
 import { MyContext } from "../Context/Context";
 import { ToastContainer } from "react-toastify";
 import Profile from "../components/profile/profile";
+/* IMPORT HO GAYA CURSOR TRAIL COMPONENT ENGINE HERE 🛠️ */
+import CursorTrail from "../components/common/CursorTrail";
 
 const Home = () => {
   const { theme } = useContext(MyContext);
 
-  // Fade-in animation for sections
-  const sectionVariants = {
+  const pageWrapperVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        duration: 0.8,
-        ease: "easeOut",
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
       },
     },
   };
 
-  // Stagger children animations
-  const containerVariants = {
-    hidden: { opacity: 0 },
+  const sectionSectionVariants = {
+    hidden: { opacity: 0, y: 30, filter: "blur(4px)" },
     visible: {
       opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
       transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1],
       },
     },
   };
 
   return (
     <motion.div
-      className={`relative ${
-        theme === "dark" ? "bg-gray-800" : "bg-soft-white"
+      className={`relative min-h-screen w-full overflow-hidden transition-colors duration-700 ${
+        theme === "dark" ? "bg-slate-900" : "bg-slate-50"
       }`}
       initial="hidden"
       animate="visible"
-      variants={containerVariants}
+      variants={pageWrapperVariants}
     >
-      {/* Hero + Profile section */}
-      <motion.div
-        className="introduction-profile-background"
-        variants={sectionVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        <motion.div
-          className="content"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <motion.div variants={sectionVariants}>
+      {/* GLOBAL HIGH-FIDELITY DYNAMIC CURSOR TRAIL STREAM ENGINE LAYER */}
+      {/* <CursorTrail /> */}
+
+      {/* Background Soft Ambient Mesh Glows */}
+      <div className="absolute top-[10%] left-[-10%] w-[600px] h-[600px] bg-[#9929fb]/3 blur-[160px] rounded-full pointer-events-none select-none" />
+      <div className="absolute top-[40%] right-[-10%] w-[500px] h-[500px] bg-[#ff9f1c]/3 blur-[140px] rounded-full pointer-events-none select-none" />
+
+      {/* Introduction + Profile Section Layout */}
+      <div className="introduction-profile-background w-full">
+        <div className="w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div variants={sectionSectionVariants}>
             <Introduction />
           </motion.div>
-          <motion.div variants={sectionVariants}>
+          
+          <motion.div variants={sectionSectionVariants}>
             <Profile />
           </motion.div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
 
-      {/* Skills section */}
-      <motion.div
-        variants={sectionVariants}
+      {/* Skills Section */}
+      <motion.div 
+        variants={sectionSectionVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.12 }}
       >
         <Skills />
       </motion.div>
 
-      {/* Work Process section */}
-      <motion.div
-        className="pt-30"
-        variants={sectionVariants}
+      {/* Work Process Section */}
+      <motion.div 
+        variants={sectionSectionVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.12 }}
       >
         <WorkProcess />
       </motion.div>
 
-      {/* Portfolio section */}
-      <motion.div
-        variants={sectionVariants}
+      {/* Portfolio Section */}
+      <motion.div 
+        variants={sectionSectionVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.1 }}
       >
         <Portfolio />
       </motion.div>
 
-      {/* Profession section */}
-      <motion.div
-        variants={sectionVariants}
+      {/* Profession Section */}
+      <motion.div 
+        variants={sectionSectionVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.12 }}
       >
         <Profession />
       </motion.div>
 
-      {/* Contact section */}
-      <motion.div
-        variants={sectionVariants}
+      {/* Contact Section */}
+      <motion.div 
+        variants={sectionSectionVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, amount: 0.12 }}
       >
         <Contact />
       </motion.div>
 
-      <ToastContainer theme={theme === "dark" ? "dark" : "light"} />
+      {/* Toast Notifications */}
+      <ToastContainer 
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={theme === "dark" ? "dark" : "light"} 
+      />
     </motion.div>
   );
 };

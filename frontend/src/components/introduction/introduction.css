@@ -1,7 +1,72 @@
-.bg-highlight {
-  background: linear-gradient(to top, #ffc8c8 40%, transparent 40%);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  padding-left: 2px;
-  padding-right: 2px;
+/* introduction.css */
+
+.premium-hero-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background Animated Glow Mesh */
+.glow-mesh-layer {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(153, 41, 251, 0.15) 0%, transparent 70%);
+  filter: blur(80px);
+  top: -10%;
+  right: -5%;
+  z-index: 0;
+  pointer-events: none;
+  animation: meshFloat 10s infinite alternate ease-in-out;
+}
+
+@keyframes meshFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-50px, 30px) scale(1.1); }
+}
+
+/* Premium Gradient Text Button */
+.btn-premium {
+  position: relative;
+  background: linear-gradient(135deg, #9929fb 0%, #ff9f1c 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(153, 41, 251, 0.3);
+  transition: all 0.4s ease;
+}
+
+.btn-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: 0.5s;
+}
+
+.btn-premium:hover::before {
+  left: 100%;
+}
+
+/* Premium Glassmorphic Stats Grid */
+.glass-stat-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .glass-stat-card {
+  background: rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba(153, 41, 251, 0.15);
 }

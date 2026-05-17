@@ -45,8 +45,8 @@ export const addressData = [
 ];
 
 export const informationSummaryData = [
-    { id: 1, title: "Experience", description: "1.5 Y." },
-    { id: 2, title: "Projects Completed", description: "8" },
+    { id: 1, title: "Experience", description: "3 Y." },
+    { id: 2, title: "Projects Completed", description: "11" },
 ];
 
 export const projectData = [

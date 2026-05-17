@@ -1,85 +1,87 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { motion } from "framer-motion";
 import { MyContext } from "../../Context/Context";
 
-const Roles = ({ role }) => {
-  const [mouseHover, setMouseHover] = useState(false);
+const Roles = ({ role, index }) => {
   const { theme } = useContext(MyContext);
 
-  const roleVariants = {
-    hidden: { opacity: 0, y: 30 },
+  // Dynamic 3D Cascade Perspective Variants Setup
+  const roleCardVariants = {
+    hidden: { 
+      opacity: 0, 
+      x: 60,
+      scale: 0.9,
+      rotateY: -15,
+      rotateX: 5
+    },
     visible: {
       opacity: 1,
-      y: 0,
+      x: 0,
+      scale: 1,
+      rotateY: 0,
+      rotateX: 0,
       transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-    hover: {
-      y: -8,
-      boxShadow:
-        theme === 'light'
-          ? '0 20px 25px -5px rgba(0, 0, 0, 0.1)'
-          : '0 20px 25px -5px rgba(0, 0, 0, 0.3)',
-      transition: {
-        duration: 0.3,
-        ease: "easeOut",
-      },
-    },
+        type: "spring",
+        stiffness: 110,
+        damping: 15,
+        delay: index * 0.08 // Seamless incremental execution link
+      }
+    }
   };
 
-  const borderVariants = {
-    hidden: { width: 0 },
-    visible: { width: "5px" },
-    transition: { duration: 0.2 },
+  const getAccentGradient = (title) => {
+    const lowerTitle = title.toLowerCase();
+    if (lowerTitle.includes("full stack")) return "from-[#9929fb] to-[#cc59ff]"; 
+    if (lowerTitle.includes("native")) return "from-cyan-500 to-blue-600"; 
+    return "from-[#ff9f1c] to-[#ff7f1c]"; 
   };
+
+  const currentGradient = getAccentGradient(role.title);
 
   return (
     <motion.div
-      onMouseEnter={() => setMouseHover(true)}
-      onMouseLeave={() => setMouseHover(false)}
-      className={`p-4 xs:p-8 h-auto ease-out duration-800 rounded-lg my-6 flex relative overflow-hidden ${
-        theme === 'light'
-          ? 'bg-white shadow-gray-300'
-          : 'bg-gray-700 shadow-gray-900'
+      variants={roleCardVariants}
+      className={`group w-full rounded-2xl border p-6 sm:p-8 relative overflow-hidden flex transition-all duration-500 ${
+        theme === 'light' 
+          ? 'bg-white border-slate-200/80 shadow-md shadow-slate-100/80' 
+          : 'bg-slate-950/40 border-slate-800/60 shadow-[0_20px_40px_rgba(0,0,0,0.3)] backdrop-blur-md hover:border-slate-700/80'
       }`}
-      variants={roleVariants}
-      initial="hidden"
-      whileInView="visible"
-      whileHover="hover"
-      viewport={{ once: true, amount: 0.5 }}
+      whileHover={{
+        y: -6,
+        scale: 1.02,
+        rotateX: -4,
+        rotateY: 4,
+        boxShadow: theme === 'dark' 
+          ? '0 20px 40px rgba(153, 41, 251, 0.12)' 
+          : '0 20px 40px rgba(0, 0, 0, 0.08)'
+      }}
+      whileTap={{ scale: 0.99 }}
+      style={{ transformStyle: "preserve-3d" }}
     >
-      <motion.div
-        className="bg-picto-primary absolute start-0 h-full mt-[-16px] xs:mt-[-32px]"
-        animate={mouseHover ? { width: "5px" } : { width: "0px" }}
-        transition={{ duration: 0.2 }}
-      />
+      {/* Left Dynamic Color Beam Accent Strip */}
+      <div className={`absolute left-0 top-0 bottom-0 w-[5px] bg-gradient-to-b ${currentGradient} transform origin-left transition-all duration-300 group-hover:w-[7px]`} />
 
-      <div>
-        <motion.p
-          className={`text-xl sm:text-2xl font-semibold pb-4 ${
-            theme === 'light' ? 'text-gray-900' : 'text-white'
-          }`}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          {role?.title}
-        </motion.p>
+      {/* Internal Glass Corner Ray Highlight */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-        <motion.p
-          className={`text-[13px] sm:text-[16px] font-normal ${
-            theme === 'light' ? 'text-gray-700' : 'text-gray-300'
+      {/* Volumetric Layer Container */}
+      <div className="flex flex-col space-y-2.5 w-full pl-3" style={{ transformStyle: "preserve-3d" }}>
+        <h3 
+          className={`text-xl font-black m-0 tracking-tight transition-colors duration-300 ${
+            theme === 'light' ? 'text-slate-900 group-hover:text-[#9929fb]' : 'text-white group-hover:text-[#cc59ff]'
           }`}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          viewport={{ once: true }}
+          style={{ transform: "translateZ(25px)" }} // Pushes text outwards in 3D parallax zone
         >
-          {role?.description}
-        </motion.p>
+          {role.title}
+        </h3>
+        
+        <p className={`text-sm sm:text-base leading-relaxed m-0 font-normal transition-colors duration-300 ${
+          theme === 'light' ? 'text-slate-600' : 'text-slate-300'
+        }`}
+        style={{ transform: "translateZ(15px)" }}
+        >
+          {role.description}
+        </p>
       </div>
     </motion.div>
   );

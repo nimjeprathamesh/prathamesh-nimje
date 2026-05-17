@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useContext } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpRightFromSquare, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { MyContext } from '../Context/Context';
 import { androidDetailsData } from '../utils/constants';
 
@@ -11,32 +11,15 @@ export default function AppsDetails() {
     const { theme } = useContext(MyContext);
     const project = androidDetailsData.find((project) => project.id === parseInt(id));
 
-    // Animation Variants
+    // Advanced Orchestration Animations Setup
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.15,
-                delayChildren: 0.2,
-            },
-        },
-    };
-
-    const imageVariants = {
-        hidden: { opacity: 0, scale: 0.9, y: 20 },
-        visible: {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            transition: {
-                duration: 0.7,
-                ease: "easeOut",
-            },
-        },
-        hover: {
-            scale: 1.05,
-            transition: { duration: 0.3 },
+          opacity: 1,
+          transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.1,
+          },
         },
     };
 
@@ -45,126 +28,50 @@ export default function AppsDetails() {
         visible: {
             opacity: 1,
             y: 0,
-            transition: {
-                duration: 0.6,
-                ease: "easeOut",
-            },
+            transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
         },
     };
 
     const logoVariants = {
-        hidden: { opacity: 0, scale: 0.5, rotate: -90 },
+        hidden: { opacity: 0, scale: 0.6, rotate: -45 },
         visible: {
             opacity: 1,
             scale: 1,
             rotate: 0,
-            transition: {
-                duration: 0.6,
-                type: "spring",
-                stiffness: 100,
-            },
+            transition: { type: "spring", stiffness: 140, damping: 14 },
         },
         hover: {
-            scale: 1.1,
-            filter: "drop-shadow(0 0 12px rgba(155, 89, 182, 0.6))",
+            scale: 1.08,
+            rotate: 5,
             transition: { duration: 0.3 },
-        },
-    };
-
-    const titleVariants = {
-        hidden: { opacity: 0, x: -30 },
-        visible: {
-            opacity: 1,
-            x: 0,
-            transition: {
-                delay: 0.1,
-                duration: 0.5,
-                ease: "easeOut",
-            },
-        },
-    };
-
-    const descriptionVariants = {
-        hidden: { opacity: 0, x: -20 },
-        visible: {
-            opacity: 1,
-            x: 0,
-            transition: {
-                delay: 0.2,
-                duration: 0.5,
-                ease: "easeOut",
-            },
-        },
-    };
-
-    const buttonVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                delay: 0.3,
-                duration: 0.5,
-                ease: "easeOut",
-            },
-        },
-        hover: {
-            scale: 1.05,
-            boxShadow: "0 10px 25px rgba(155, 89, 182, 0.3)",
-            transition: { duration: 0.3 },
-        },
-        tap: {
-            scale: 0.95,
-        },
-    };
-
-    const contentVariants = {
-        hidden: { opacity: 0, y: 40 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.7,
-                ease: "easeOut",
-            },
-        },
-    };
-
-    const sectionHeaderVariants = {
-        hidden: { opacity: 0, x: -20 },
-        visible: {
-            opacity: 1,
-            x: 0,
-            transition: {
-                duration: 0.5,
-                ease: "easeOut",
-            },
         },
     };
 
     const bulletPointVariants = {
-        hidden: { opacity: 0, x: -15 },
+        hidden: { opacity: 0, x: -15, filter: "blur(4px)" },
         visible: (i) => ({
             opacity: 1,
             x: 0,
+            filter: "blur(0px)",
             transition: {
-                delay: i * 0.08,
-                duration: 0.4,
+                delay: i * 0.04,
+                duration: 0.5,
                 ease: "easeOut",
             },
         }),
     };
 
-    const paragraphVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                duration: 0.5,
-                ease: "easeOut",
-            },
-        },
+    // Helper function to dynamically map accent colors based on specific case titles
+    const getAccentColor = (title) => {
+        if (!title) return "rgba(153, 41, 251, 0.18)";
+        const lower = title.toLowerCase();
+        if (lower.includes("debt")) return "rgba(34, 197, 94, 0.18)";
+        if (lower.includes("mechanic")) return "rgba(239, 68, 68, 0.18)";
+        if (lower.includes("dance")) return "rgba(168, 85, 247, 0.18)";
+        return "rgba(6, 182, 212, 0.18)";
     };
+
+    const themeGlow = getAccentColor(project?.title);
 
     const renderDescription = (description) => {
         if (!description) return null;
@@ -172,23 +79,24 @@ export default function AppsDetails() {
         const lines = description.split('\n').filter(line => line.trim());
         const elements = [];
         let i = 0;
-        let bulletIndex = 0;
 
         while (i < lines.length) {
             const line = lines[i].trim();
 
             if (line.endsWith(':')) {
                 elements.push(
-                    <motion.p
+                    <motion.h3
                         key={`header-${i}`}
-                        className={`font-semibold text-base sm:text-lg mt-4 mb-2 ${theme === 'light' ? 'text-black' : 'text-white'}`}
-                        variants={sectionHeaderVariants}
-                        initial="hidden"
-                        whileInView="visible"
+                        className={`text-lg sm:text-xl font-black mt-8 mb-4 tracking-tight border-l-4 border-[#9929fb] pl-3 ${
+                            theme === 'light' ? 'text-slate-900' : 'text-white'
+                        }`}
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, amount: 0.5 }}
+                        transition={{ duration: 0.4 }}
                     >
-                        {line}
-                    </motion.p>
+                        {line.slice(0, -1)}
+                    </motion.h3>
                 );
                 i++;
 
@@ -204,27 +112,34 @@ export default function AppsDetails() {
                     elements.push(
                         <motion.div
                             key={`bullets-${i}`}
-                            className='flex flex-col gap-2 mb-4'
+                            className={`grid grid-cols-1 gap-3 p-5 rounded-2xl border ${
+                                theme === 'light' 
+                                    ? 'bg-slate-50/60 border-slate-200/80' 
+                                    : 'bg-slate-950/30 border-slate-800/50 backdrop-blur-md'
+                            }`}
                             initial="hidden"
                             whileInView="visible"
-                            viewport={{ once: true, amount: 0.5 }}
+                            viewport={{ once: true, amount: 0.15 }}
                             variants={{
-                                visible: {
-                                    transition: {
-                                        staggerChildren: 0.08,
-                                    },
-                                },
+                                visible: { transition: { staggerChildren: 0.05 } }
                             }}
                         >
                             {bulletPoints.map((point, idx) => (
                                 <motion.div
                                     key={idx}
-                                    className='flex gap-3'
+                                    className="flex items-start gap-3"
                                     custom={idx}
                                     variants={bulletPointVariants}
+                                    whileHover={{ x: 3 }}
                                 >
-                                    <span className={`${theme === 'light' ? 'text-blue-600' : 'text-blue-400'} font-bold text-lg sm:text-xl flex-shrink-0`}>»</span>
-                                    <p className={`flex-1 text-sm sm:text-base ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>{point}</p>
+                                    <span className="text-[#9929fb] text-xs sm:text-sm mt-1 flex-shrink-0">
+                                        <FontAwesomeIcon icon={faChevronRight} />
+                                    </span>
+                                    <p className={`m-0 text-sm sm:text-base leading-relaxed ${
+                                        theme === 'light' ? 'text-slate-700' : 'text-slate-300'
+                                    }`}>
+                                        {point.startsWith('-') || point.startsWith('»') ? point.substring(1).trim() : point}
+                                    </p>
                                 </motion.div>
                             ))}
                         </motion.div>
@@ -234,11 +149,13 @@ export default function AppsDetails() {
                 elements.push(
                     <motion.p
                         key={`para-${i}`}
-                        className={`text-justify mb-4 text-sm sm:text-base ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}
-                        variants={paragraphVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.5 }}
+                        className={`text-justify mb-5 text-sm sm:text-base leading-relaxed ${
+                            theme === 'light' ? 'text-slate-700' : 'text-slate-300'
+                        }`}
+                        initial={{ opacity: 0, y: 15 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.5 }}
                     >
                         {line}
                     </motion.p>
@@ -252,82 +169,101 @@ export default function AppsDetails() {
 
     return (
         <motion.div
-            className={`flex flex-col items-center gap-6 sm:gap-10 py-6 sm:py-10 px-4 sm:px-8 md:px-16 lg:px-32 ${theme === 'light' ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
+            className={`w-full min-h-screen transition-colors duration-500 flex flex-col items-center py-16 sm:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden ${
+                theme === 'light' ? 'bg-slate-50' : 'bg-slate-900'
+            }`}
             variants={containerVariants}
             initial="hidden"
             animate="visible"
         >
-            {/* Main Image */}
-            <motion.img
-                src={project?.image}
-                alt={`${project?.image} image`}
-                className={`w-full max-w-sm sm:max-w-md lg:max-w-2xl mx-auto shadow-xl ${theme === 'light' ? 'shadow-[#aaa]' : 'shadow-gray-800'} rounded-xl`}
-                variants={imageVariants}
-                whileHover="hover"
-            />
+            {/* Soft Breathing Ambient Glow Maps */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[400px] rounded-full pointer-events-none opacity-40 blur-[130px] z-0" style={{ backgroundColor: themeGlow }} />
 
-            {/* Header Section with Logo, Title, Description, and Button */}
-            <motion.div
-                className='flex flex-col sm:flex-row justify-evenly items-center py-4 sm:py-5 w-full gap-4 sm:gap-0'
-                variants={headerSectionVariants}
-            >
-                {/* Logo */}
-                <motion.img
-                    src={project?.logo}
-                    alt={`${project?.image} image`}
-                    className={`w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 shadow-xl ${theme === 'light' ? 'shadow-[#aaa]' : 'shadow-gray-800'} rounded-xl flex-shrink-0`}
-                    variants={logoVariants}
-                    whileHover="hover"
-                />
+            <div className="w-full max-w-4xl space-y-12 relative z-10">
+                
+                {/* 1. Main Immersive Mockup Section Stage */}
+                <div className="perspective-[1200px] w-full flex justify-center">
+                    <motion.div
+                        className={`w-full max-w-2xl aspect-[16/10] overflow-hidden rounded-3xl border shadow-2xl relative ${
+                            theme === 'light' ? 'bg-white border-slate-200' : 'bg-slate-950 border-slate-800'
+                        }`}
+                        whileHover={{
+                            y: -6,
+                            scale: 1.02,
+                            rotateX: -2,
+                            rotateY: 2,
+                            boxShadow: `0 30px 60px ${themeGlow}`
+                        }}
+                        style={{ transformStyle: "preserve-3d" }}
+                        transition={{ duration: 0.4, ease: "easeOut" }}
+                    >
+                        <img
+                            src={project?.image}
+                            alt={`${project?.title} large mockup display representation`}
+                            className="w-full h-full object-cover select-none"
+                        />
+                    </motion.div>
+                </div>
 
-                {/* Title and Description */}
-                <motion.div className='flex flex-col justify-center items-start text-center sm:text-left'>
-                    <motion.h1
-                        className={`font-bold text-2xl sm:text-3xl ${theme === 'light' ? 'text-black' : 'text-white'}`}
-                        variants={titleVariants}
+                {/* 2. Unified Grid Control Dashboard Block */}
+                <motion.div
+                    className={`w-full p-6 sm:p-8 rounded-3xl border flex flex-col md:flex-row items-center justify-between gap-6 ${
+                        theme === 'light' 
+                            ? 'bg-white border-slate-200 shadow-lg shadow-slate-100' 
+                            : 'bg-slate-950/40 border-slate-800/80 backdrop-blur-md shadow-2xl'
+                    }`}
+                    variants={headerSectionVariants}
+                    style={{ transformStyle: "preserve-3d", perspective: 1000 }}
+                >
+                    <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left" style={{ transform: "translateZ(20px)" }}>
+                        {/* Company Logo Node */}
+                        <motion.img
+                            src={project?.logo}
+                            alt={`${project?.title} platform micro badge asset`}
+                            className={`w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-2xl shadow-md p-2 bg-slate-900 border ${
+                                theme === 'light' ? 'border-slate-200 bg-white' : 'border-slate-800 bg-slate-950'
+                            }`}
+                            variants={logoVariants}
+                            whileHover="hover"
+                        />
+
+                        {/* Title and Short Metadata Sub-fields */}
+                        <div className="space-y-1">
+                            <h1 className={`font-black text-2xl sm:text-3xl tracking-tight m-0 ${
+                                theme === 'light' ? 'text-slate-900' : 'text-white'
+                            }`}>
+                                {project?.title}
+                            </h1>
+                            <p className={`text-sm sm:text-base font-medium m-0 ${
+                                theme === 'light' ? 'text-slate-500' : 'text-slate-400'
+                            }`}>
+                                {project?.short_desc}
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Operational Action CTA Trigger Link */}
+                    <motion.a
+                        href={project?.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="h-11 px-6 rounded-xl font-bold text-sm tracking-wide bg-gradient-to-r from-[#9929fb] to-[#cc59ff] text-white shadow-md inline-flex items-center justify-center gap-2 decoration-none flex-shrink-0 relative overflow-hidden group/btn"
+                        whileHover={{ y: -2, boxShadow: "0 8px 20px rgba(153, 41, 251, 0.4)" }}
+                        whileTap={{ scale: 0.96 }}
+                        style={{ transform: "translateZ(15px)" }}
                     >
-                        {project.title}
-                    </motion.h1>
-                    <motion.p
-                        className={`text-base sm:text-xl ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'}`}
-                        variants={descriptionVariants}
-                    >
-                        {project.short_desc}
-                    </motion.p>
+                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -translateX-full group-hover/btn:translate-x-full transition-transform duration-1000 ease-out" />
+                        <span className="relative z-10">Google Play Store</span>
+                        <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="text-[10px] relative z-10" />
+                    </motion.a>
                 </motion.div>
 
-                {/* Live Link Button */}
-                <motion.a
-                    href={project?.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`btn hover:border-picto-primary hover:text-picto-primary text-sm xs:text-[16px] font-semibold hover:gap-3 xs:hover:gap-4 transition-all duration-300 py-2 px-6 w-full sm:w-auto text-center mt-2 sm:mt-5 inline-block ${theme === 'light' ? 'bg-white text-gray-900 hover:bg-gray-50' : 'bg-gray-700 text-white hover:bg-gray-600'}`}
-                    variants={buttonVariants}
-                    whileHover="hover"
-                    whileTap="tap"
-                >
-                    Live Link
-                    <motion.span
-                        className="ms-1 xs:ms-3"
-                        initial={{ x: 0 }}
-                        whileHover={{ x: 4 }}
-                        transition={{ duration: 0.2 }}
-                    >
-                        <FontAwesomeIcon icon={faArrowRight} size="lg" />
-                    </motion.span>
-                </motion.a>
-            </motion.div>
+                {/* 3. Deep Analysis Content Bento Sections */}
+                <div className="w-full relative z-10">
+                    {renderDescription(project?.description)}
+                </div>
 
-            {/* Description Content */}
-            <motion.div
-                className="w-full max-w-4xl"
-                variants={contentVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-            >
-                {renderDescription(project?.description)}
-            </motion.div>
+            </div>
         </motion.div>
     );
 }

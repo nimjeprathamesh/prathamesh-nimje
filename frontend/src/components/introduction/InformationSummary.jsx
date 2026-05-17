@@ -1,39 +1,27 @@
 import { motion } from "framer-motion";
 
-const InformationSummary = ({ item }) => {
+const InformationSummary = ({ item, index }) => {
   return (
     <motion.div 
-      className={`bg-[#F6EBFE] text-center`}
-      whileHover={{ 
-        scale: 1.05,
-        backgroundColor: "#E9D5FD",
-        transition: { duration: 0.3 }
+      className="glass-stat-card text-center py-4 px-2 flex flex-col justify-center items-center rounded-2xl"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.5,
+        delay: 0.3 + index * 0.1,
       }}
-      whileTap={{ scale: 0.95 }}
+      whileHover={{ 
+        y: -4,
+        borderColor: "rgba(153, 41, 251, 0.4)",
+      }}
     >
-      <div className="w-auto h-auto mx-2 sm:mx-4 my-5 xxs:my-5 sm:my-[17px]">
-        <motion.p
-          className={`text-[16px] xxs:text-[18px] sm:text-[32px] font-semibold text-gray-700`}
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{
-            type: "spring",
-            stiffness: 260,
-            damping: 20,
-            delay: 0.2
-          }}
-        >
-          {item.description}
-        </motion.p>
-        <motion.p
-          className={`text-[8px] xxs:text-[9px] sm:text-[16px] font-normal px-[0.90rem] sm:px-[1rem] text-wrap text-gray-500`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-        >
-          {item.title}
-        </motion.p>
-      </div>
+      <p className="text-2xl sm:text-3xl font-black bg-gradient-to-b from-[#9929fb] to-[#cc59ff] bg-clip-text text-transparent m-0">
+        {item.description}
+      </p>
+      
+      <p className="text-[10px] sm:text-xs uppercase tracking-wider font-bold text-slate-400 mt-1 mb-0 px-1 break-words">
+        {item.title}
+      </p>
     </motion.div>
   );
 };

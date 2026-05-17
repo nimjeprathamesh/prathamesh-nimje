@@ -46,15 +46,15 @@ body {
 }
 
 .introduction-profile-background {
-  background: radial-gradient(
-      circle at 12% 100%,
-      #ffe2b0f5 1% 5px,
-      transparent 15%
-    ),
-    /* bottom left */
-      radial-gradient(circle at 95% -15%, #da4df166 5%, transparent 30%),
-    /* top right */
-      radial-gradient(circle at center right, #c4f5e9b2 2%, transparent 35%); /* center right */
+  position: relative;
+  background: radial-gradient(circle at 95% 20%, rgba(153, 41, 251, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 10% 80%, rgba(255, 159, 28, 0.08) 0%, transparent 40%);
+  overflow: hidden;
+}
+
+/* Universally transition rule fix to prevent style breaks */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
 }
 .blog-background {
   background: radial-gradient(circle at -10% 0%, #da4df166 1%, transparent 25%),
@@ -79,4 +79,22 @@ body {
 
 .dark .btn-ghost {
   color: #f9fafb;
+}
+
+/* Custom Active Class Styles */
+.active-nav-pill {
+  color: #9929fb !important;
+  background-color: rgba(153, 41, 251, 0.1) !important;
+}
+
+.dark .active-nav-pill {
+  color: #cc59ff !important;
+  background-color: rgba(153, 41, 251, 0.2) !important;
+}
+
+/* Strict resets for custom alignment mapping inside standard templates */
+nav ul, nav li {
+  all: unset;
+  display: flex;
+  align-items: center;
 }

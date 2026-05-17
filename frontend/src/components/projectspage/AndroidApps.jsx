@@ -12,81 +12,70 @@ const AndroidApps = () => {
         visible: {
             opacity: 1,
             y: 0,
-            transition: {
-                duration: 0.6,
-                ease: "easeOut",
-            },
+            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
         },
     };
 
-    const containerVariants = {
+    const gridContainerVariants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.12,
-                delayChildren: 0.2,
-            },
-        },
-    };
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.6,
-                ease: "easeOut",
+                staggerChildren: 0.08,
+                delayChildren: 0.15,
             },
         },
     };
 
     return (
-        <motion.div
-            className="content pt-10 md:pt-15 xl:pt-25 pb-10 md:pb-25 max-xxl:p-2"
-            id="portfolio"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-        >
-            <motion.div className="xl:mb-17.5 mb-5">
-                <motion.div className="max-sm:px-2 text-center mx-auto">
-                    <motion.p
-                        className={`section-title ${
-                            theme === 'light' ? 'text-gray-900' : 'text-white'
-                        }`}
-                        variants={titleVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.5 }}
-                    >
-                        Android Apps I have Published
-                    </motion.p>
-                </motion.div>
-            </motion.div>
+        <div className="w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 relative z-10">
 
-            <motion.div className="mx-auto flex justify-center">
+            {/* Top Heading Group */}
+            <div className="max-w-3xl mx-auto text-center mb-16">
+                <motion.div variants={titleVariants} className="space-y-3">
+                    <span className="text-xs uppercase tracking-[0.25em] font-extrabold text-cyan-500 block">
+                        Production Software
+                    </span>
+                    <h2 className={`text-3xl md:text-5xl font-black tracking-tight ${theme === "light" ? "text-slate-900" : "text-white"
+                        }`}>
+                        Android Applications <span className="bg-gradient-to-r from-cyan-500 to-[#9929fb] bg-clip-text text-transparent">Published</span>
+                    </h2>
+                </motion.div>
+            </div>
+
+            {/* Isometric 3D Deck Module Presentation Stage */}
+            <div className="perspective-[1200px]">
                 <motion.div
-                    className="grid xl:grid-cols-3 md:grid-cols-2 gap-6"
-                    variants={containerVariants}
+                    className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10 w-full"
+                    variants={gridContainerVariants}
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, amount: 0.2 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    style={{ transformStyle: "preserve-3d" }}
                 >
                     {androidData.map((data, index) => (
                         <motion.div
-                            key={index}
-                            variants={itemVariants}
+                            key={data.id || index}
                             custom={index}
+                            variants={{
+                                hidden: { opacity: 0, y: 35, rotateX: 10, scale: 0.95 },
+                                visible: {
+                                    opacity: 1,
+                                    y: 0,
+                                    rotateX: 0,
+                                    scale: 1,
+                                    transition: { type: "spring", stiffness: 130, damping: 18 }
+                                }
+                            }}
+                            style={{ transformStyle: "preserve-3d" }}
                         >
-                            <Apps data={data} />
+                            <Apps data={data} index={index} />
                         </motion.div>
                     ))}
                 </motion.div>
-            </motion.div>
-        </motion.div>
+            </div>
+
+        </div>
     );
 };
 

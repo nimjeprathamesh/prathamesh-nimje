@@ -7,42 +7,24 @@ import { projectData } from "../../utils/constants";
 const Portfolio = () => {
   const { theme } = useContext(MyContext);
 
-  // Animation variants
+  // Stagger configurations for parent section
   const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      y: 0,
       transition: {
-        duration: 0.6,
-        ease: "easeOut",
-        staggerChildren: 0.2
+        staggerChildren: 0.15,
+        delayChildren: 0.1
       }
     }
   };
 
   const headerVariants = {
-    hidden: { opacity: 0, y: -30 },
+    hidden: { opacity: 0, y: -20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const descriptionVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        delay: 0.2,
-        ease: "easeOut"
-      }
+      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
     }
   };
 
@@ -51,120 +33,71 @@ const Portfolio = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.3
+        staggerChildren: 0.08,
+        delayChildren: 0.15
       }
-    }
-  };
-
-  const projectCardVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 50,
-      scale: 0.9
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const buttonVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-        delay: 0.6,
-        ease: "easeOut"
-      }
-    },
-    hover: {
-      scale: 1.05,
-      transition: {
-        duration: 0.3
-      }
-    },
-    tap: {
-      scale: 0.95
     }
   };
 
   return (
-    <motion.div
-      className="content mt-10 md:mt-15 xl:mt-25 mb-10 md:mb-25 max-xxl:p-2"
+    <motion.section
+      className="w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 py-20 relative overflow-hidden"
       id="projects"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.1 }}
       variants={containerVariants}
     >
+      {/* Background Cinematic Aura Light Maps */}
+      <div className="absolute top-1/2 right-0 w-[450px] h-[450px] bg-[#9929fb]/5 blur-[130px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-[#ff9f1c]/5 blur-[130px] rounded-full pointer-events-none" />
+
+      {/* Header Info Block */}
       <motion.div 
-        className="xl:mb-17.5 mb-5"
+        className="text-center max-w-2xl mx-auto mb-16"
         variants={headerVariants}
       >
-        <div className="max-sm:px-2 text-center mx-auto max-w-144.25">
-          <motion.p 
-            className={`section-title ${
-              theme === 'light' ? 'text-gray-900' : 'text-white'
-            }`}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            Projects
-          </motion.p>
-          <motion.p 
-            className={`font-normal text-[18px] max-sm:text-[14px] pt-6 ${
-              theme === 'light' ? 'text-gray-400' : 'text-gray-300'
-            }`}
-            variants={descriptionVariants}
-          >
-            Here's a selection of my recent work, showcasing my skills in
-            creating user-centric and visually appealing interfaces.
-          </motion.p>
-        </div>
+        <h2 className={`text-4xl md:text-5xl font-black tracking-tight ${
+          theme === 'light' ? 'text-slate-900' : 'text-white'
+        }`}>
+          Featured <span className="bg-gradient-to-r from-[#9929fb] via-[#cc59ff] to-[#ff9f1c] bg-clip-text text-transparent">Creations</span>
+        </h2>
+        <p className={`text-base md:text-lg mt-4 font-normal leading-relaxed ${
+          theme === 'light' ? 'text-slate-500' : 'text-slate-400'
+        }`}>
+          Here's a selection of my recent work, showcasing my skills in
+          creating user-centric and visually appealing interfaces.
+        </p>
       </motion.div>
 
+      {/* Projects Grid Container with Isometric 3D Space */}
       <motion.div 
-        className="mx-auto flex justify-center"
+        className="w-full flex justify-center perspective-[1200px]"
         variants={gridVariants}
       >
-        <div className="grid xl:grid-cols-3 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-10 w-full" style={{ transformStyle: "preserve-3d" }}>
           {projectData.slice(0, 3).map((data, index) => (
-            <motion.div
-              key={index}
-              variants={projectCardVariants}
-            >
-              <Projects data={data} />
-            </motion.div>
+            <Projects key={data.id || index} data={data} index={index} />
           ))}
         </div>
       </motion.div>
 
+      {/* Footer "More Projects" Action Trigger Button */}
       <motion.div 
-        className="text-center"
-        variants={buttonVariants}
+        className="text-center mt-16"
+        variants={headerVariants}
       >
         <motion.a
           href="/projects"
           target="_blank"
-          className="btn btn-primary py-2 px-6 mt-12.5 text-center text-[16px] font-semibold inline-block"
-          variants={buttonVariants}
-          whileHover="hover"
-          whileTap="tap"
+          className="btn btn-premium btn-md sm:btn-lg rounded-xl px-8 shadow-lg text-white font-bold tracking-wide inline-flex items-center justify-center decoration-none"
+          whileHover={{ scale: 1.03, y: -2 }}
+          whileTap={{ scale: 0.97 }}
         >
-          More Projects
+          Explore Full Archive
         </motion.a>
       </motion.div>
-    </motion.div>
+    </motion.section>
   );
 };
 

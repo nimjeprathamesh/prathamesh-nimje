@@ -2,251 +2,224 @@ import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { motion } from "framer-motion";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUpRightFromSquare, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MyContext } from "../Context/Context";
 import { projectDetailsData } from "../utils/constants";
+
+const splitTitleText = (text) => {
+    if (!text) return "";
+    return text.split('').map((char, index) => (
+        <motion.span
+            key={index}
+            style={{ display: 'inline-block' }}
+            variants={{
+                hidden: { opacity: 0, y: 30, rotateX: -60 },
+                visible: { opacity: 1, y: 0, rotateX: 0 }
+            }}
+            transition={{ type: "spring", stiffness: 140, damping: 14, delay: index * 0.02 }}
+        >
+            {char === ' ' ? '\u00A0' : char}
+        </motion.span>
+    ));
+};
 
 export default function ProjectDetails() {
     const { id } = useParams();
     const { theme } = useContext(MyContext);
     const project = projectDetailsData.find((project) => project.id === parseInt(id));
 
-    // Different animation variants
+    // Advanced Global Stagger Orchestration
     const containerVariants = {
-        hidden: {},
+        hidden: { opacity: 0 },
         visible: {
-            transition: {
-                staggerChildren: 0.2
-            }
+            opacity: 1,
+            transition: { staggerChildren: 0.12, delayChildren: 0.1 }
         }
     };
 
-    const titleVariants = {
-        hidden: { 
-            opacity: 0, 
-            scale: 0.5,
-            rotate: -10
-        },
+    const imageCardVariants = {
+        hidden: { opacity: 0, y: 40, scale: 0.95, rotateX: 12 },
         visible: {
-            opacity: 1,
-            scale: 1,
-            rotate: 0,
-            transition: {
-                duration: 0.7,
-                ease: [0.6, 0.05, 0.01, 0.9]
-            }
-        }
-    };
-
-    const imageVariants = {
-        hidden: { 
-            opacity: 0,
-            rotateY: 90,
-            scale: 0.8
-        },
-        visible: {
-            opacity: 1,
-            rotateY: 0,
-            scale: 1,
-            transition: {
-                duration: 0.8,
-                ease: "easeOut"
-            }
-        }
-    };
-
-    const descriptionVariants = {
-        hidden: { 
-            opacity: 0,
-            x: -100,
-            skewX: -10
-        },
-        visible: {
-            opacity: 1,
-            x: 0,
-            skewX: 0,
-            transition: {
-                duration: 0.6,
-                ease: "easeOut"
-            }
-        }
-    };
-
-    const listItemVariants = {
-        hidden: { 
-            opacity: 0, 
-            x: 100,
-            rotate: 5
-        },
-        visible: (index) => ({
-            opacity: 1,
-            x: 0,
-            rotate: 0,
-            transition: {
-                duration: 0.5,
-                delay: index * 0.08,
-                ease: [0.25, 0.46, 0.45, 0.94]
-            }
-        })
-    };
-
-    const buttonVariants = {
-        hidden: { 
-            opacity: 0,
-            y: 50,
-            scale: 0.8
-        },
-        visible: (index) => ({
             opacity: 1,
             y: 0,
             scale: 1,
-            transition: {
-                duration: 0.5,
-                delay: index * 0.2,
-                type: "spring",
-                stiffness: 100,
-                damping: 10
-            }
+            rotateX: 0,
+            transition: { type: "spring", stiffness: 120, damping: 18 }
+        }
+    };
+
+    const textBlockVariants = {
+        hidden: { opacity: 0, y: 25 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+        }
+    };
+
+    const bulletNodeVariants = {
+        hidden: { opacity: 0, x: -15, filter: "blur(4px)" },
+        visible: (i) => ({
+            opacity: 1,
+            x: 0,
+            filter: "blur(0px)",
+            transition: { delay: i * 0.04, duration: 0.4, ease: "easeOut" }
         })
     };
+
+    // Helper mapping script to dynamically assign ambient halos based on project categories
+    const getContextAccentColor = (title) => {
+        if (!title) return "rgba(153, 41, 251, 0.16)";
+        const lower = title.toLowerCase();
+        if (lower.includes("tour") || lower.includes("management")) return "rgba(59, 130, 246, 0.16)"; // Cyan Blue
+        if (lower.includes("event")) return "rgba(249, 115, 22, 0.16)";                                    // Orange Flare
+        if (lower.includes("challenge")) return "rgba(168, 85, 247, 0.16)";                                // Radiant Violet
+        return "rgba(153, 41, 251, 0.16)";                                                                  // Global Brand Purple
+    };
+
+    const ambientHaloGlow = getContextAccentColor(project?.title);
+
+    if (!project) {
+        return (
+            <div className={`w-full min-h-screen flex items-center justify-center ${theme === 'light' ? 'bg-slate-50 text-slate-900' : 'bg-slate-900 text-white'}`}>
+                <p className="text-lg font-black tracking-wide">Project Showcase Matrix Terminated</p>
+            </div>
+        );
+    }
 
     return (
         <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className={`flex flex-col justify-center items-center gap-6 sm:gap-10 py-6 sm:py-10 px-4 sm:px-8 md:px-16 lg:px-32 ${theme === 'light' ? 'bg-white' : 'bg-gray-900'}`}
+            className={`w-full min-h-screen transition-colors duration-500 flex flex-col items-center py-16 sm:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden ${theme === 'light' ? 'bg-slate-50' : 'bg-slate-900'
+                }`}
         >
-            <motion.p
-                variants={titleVariants}
-                className={`section-title text-center text-2xl sm:text-3xl md:text-4xl ${theme === 'light' ? 'text-black' : 'text-white'}`}
-            >
-                {project.title}
-            </motion.p>
+            {/* Background Soft Ambient Light Map Cloud */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1100px] h-[450px] rounded-full pointer-events-none opacity-40 blur-[140px] z-0" style={{ backgroundColor: ambientHaloGlow }} />
 
-            <motion.img
-                variants={imageVariants}
-                whileHover={{ 
-                    scale: 1.05,
-                    rotate: [0, -2, 2, -2, 0],
-                    transition: { duration: 0.5 }
-                }}
-                src={project?.image}
-                alt={`${project?.title} image`}
-                className={`w-full max-w-md sm:max-w-lg md:max-w-2xl rounded-4xl border shadow-lg ${theme === 'light' ? 'border-black shadow-gray-900' : 'border-gray-800 shadow-gray-800'}`}
-            />
+            <div className="w-full max-w-4xl space-y-12 relative z-10">
 
-            <motion.p
-                variants={descriptionVariants}
-                style={{ lineHeight: "25px", letterSpacing: "0%" }}
-                className={`text-sm sm:text-base md:text-lg text-wrap px-4 sm:px-8 md:px-16 lg:px-32 text-center sm:text-left ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'}`}
-            >
-                {project?.description}
-            </motion.p>
+                {/* Top Header Section: Split Animation Text */}
+                <div className="text-center max-w-2xl mx-auto space-y-2" style={{ perspective: 1000 }}>
+                    <span className="text-xs uppercase tracking-[0.3em] font-black text-[#9929fb] block">
+                        Technical Case Study
+                    </span>
+                    <h1 className={`text-3xl sm:text-5xl font-black tracking-tight m-0 leading-tight ${theme === 'light' ? 'text-slate-900' : 'text-white'
+                        }`}>
+                        {splitTitleText(project.title)}
+                    </h1>
+                </div>
 
-            <motion.ul
-                className={`space-y-2 sm:space-y-4 px-4 sm:px-8 md:px-16 lg:px-32 w-full max-w-4xl ${theme === 'light' ? 'text-gray-700' : 'text-gray-300'}`}
-            >
-                {project?.details.map((point, i) => (
-                    <motion.li
-                        key={i}
-                        custom={i}
-                        variants={listItemVariants}
-                        initial="hidden"
-                        animate="visible"
+                {/* 1. Immersive 3D Parallax Image Deck Stage */}
+                <div className="perspective-[1200px] w-full flex justify-center">
+                    <motion.div
+                        variants={imageCardVariants}
                         whileHover={{
-                            x: 10,
+                            y: -8,
                             scale: 1.02,
-                            transition: { duration: 0.2 }
+                            rotateX: -3,
+                            rotateY: 3,
+                            boxShadow: `0 35px 70px ${ambientHaloGlow}`
                         }}
-                        className="flex gap-2 text-sm sm:text-base md:text-lg cursor-default"
+                        style={{ transformStyle: "preserve-3d" }}
+                        className={`w-full max-w-3xl aspect-[16/10] overflow-hidden rounded-3xl border shadow-2xl relative bg-slate-950/20`}
                     >
-                        <motion.span 
-                            className={`${theme === 'light' ? 'text-blue-600' : 'text-blue-400'} text-base sm:text-lg flex-shrink-0`}
-                            animate={{
-                                rotate: [0, -10, 10, -10, 0],
-                                scale: [1, 1.2, 1]
-                            }}
-                            transition={{
-                                duration: 2,
-                                repeat: Infinity,
-                                repeatDelay: 3,
-                                delay: i * 0.5
-                            }}
-                        >
-                            »
-                        </motion.span>
-                        <span className="flex-1">{point}</span>
-                    </motion.li>
-                ))}
-            </motion.ul>
+                        {/* Dark Mask Shield Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent z-10 pointer-events-none" />
 
-            <div className="flex flex-col sm:flex-row justify-center sm:justify-evenly items-center gap-4 sm:gap-8 w-full max-w-md sm:max-w-lg mt-5">
-                <motion.a
-                    custom={0}
-                    variants={buttonVariants}
-                    initial="hidden"
-                    animate="visible"
-                    whileHover={{ 
-                        scale: 1.1,
-                        boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.3)",
-                        transition: { duration: 0.3 }
-                    }}
-                    whileTap={{ 
-                        scale: 0.9,
-                        rotate: -5
-                    }}
-                    href={project?.source}
-                    target="_blank"
-                    className={`btn hover:border-picto-primary hover:text-picto-primary text-sm xs:text-[16px] font-semibold hover:gap-3 xs:hover:gap-4 transition-all duration-300 py-3 px-6 w-full sm:w-auto text-center ${theme === 'light' ? 'bg-white text-gray-900 hover:bg-gray-50' : 'bg-gray-700 text-white hover:bg-gray-600'}`}
-                >
-                    Source Code
-                    <motion.span
-                        className="ms-1 xs:ms-3 inline-block"
-                        whileHover={{ 
-                            rotate: [0, 360],
-                            scale: [1, 1.3, 1],
-                            transition: { duration: 0.6 }
-                        }}
-                    >
-                        <FontAwesomeIcon icon={faGithub} size="lg" />
-                    </motion.span>
-                </motion.a>
+                        <img
+                            src={project?.image}
+                            alt={`${project?.title} architectural overview mockup`}
+                            className="w-full h-full object-cover select-none origin-center"
+                        />
+                    </motion.div>
+                </div>
 
-                <motion.a
-                    custom={1}
-                    variants={buttonVariants}
-                    initial="hidden"
-                    animate="visible"
-                    whileHover={{ 
-                        scale: 1.1,
-                        boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.3)",
-                        transition: { duration: 0.3 }
-                    }}
-                    whileTap={{ 
-                        scale: 0.9,
-                        rotate: 5
-                    }}
-                    href={project?.link}
-                    target="_blank"
-                    className={`btn hover:border-picto-primary hover:text-picto-primary text-sm xs:text-[16px] font-semibold hover:gap-3 xs:hover:gap-4 transition-all duration-300 py-3 px-6 w-full sm:w-auto text-center ${theme === 'light' ? 'bg-white text-gray-900 hover:bg-gray-50' : 'bg-gray-700 text-white hover:bg-gray-600'}`}
+                {/* 2. Description Content Bento Box Plate */}
+                <motion.div
+                    className={`p-6 sm:p-8 rounded-3xl border text-base sm:text-lg leading-relaxed text-justify font-normal ${theme === 'light'
+                            ? 'bg-white border-slate-200 shadow-md text-slate-700'
+                            : 'bg-slate-950/40 border-slate-800/60 text-slate-300 backdrop-blur-md shadow-2xl'
+                        }`}
+                    variants={textBlockVariants}
                 >
-                    Live Link
-                    <motion.span
-                        className="ms-1 xs:ms-3 inline-block"
-                        animate={{
-                            x: [0, 5, 0]
-                        }}
-                        transition={{
-                            duration: 1.5,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
+                    {project?.description}
+                </motion.div>
+
+                {/* 3. Deep Analysis Key Details Bullet Nodes Container */}
+                <motion.div className="space-y-4 w-full" variants={textBlockVariants}>
+                    <h3 className={`text-lg sm:text-xl font-black tracking-tight border-l-4 border-[#9929fb] pl-3 m-0 ${theme === 'light' ? 'text-slate-900' : 'text-white'
+                        }`}>
+                        Core Structural Architecture
+                    </h3>
+
+                    <div className={`grid grid-cols-1 gap-3.5 p-5 sm:p-7 rounded-3xl border ${theme === 'light'
+                            ? 'bg-slate-100/60 border-slate-200/80'
+                            : 'bg-slate-950/30 border-slate-800/50 backdrop-blur-lg'
+                        }`}>
+                        {project?.details.map((point, i) => (
+                            <motion.div
+                                key={i}
+                                custom={i}
+                                variants={bulletNodeVariants}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.15 }}
+                                whileHover={{ x: 4 }}
+                                className="flex items-start gap-3.5 text-sm sm:text-base leading-relaxed cursor-default"
+                            >
+                                <span className="text-[#9929fb] text-xs sm:text-sm mt-1.5 flex-shrink-0 select-none">
+                                    <FontAwesomeIcon icon={faChevronRight} />
+                                </span>
+                                <p className="m-0 flex-1 font-medium">
+                                    {point.startsWith('»') || point.startsWith('-') ? point.substring(1).trim() : point}
+                                </p>
+                            </motion.div>
+                        ))}
+                    </div>
+                </motion.div>
+
+                {/* 4. Functional High-Contrast Direct Control Anchors Dock Row */}
+                <motion.div
+                    className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-4 w-full max-w-md mx-auto"
+                    variants={textBlockVariants}
+                    style={{ transformStyle: "preserve-3d", perspective: 1000 }}
+                >
+                    <motion.a
+                        href={project?.source}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`flex-1 h-12 w-full rounded-xl font-bold text-sm tracking-wide border transition-all duration-300 inline-flex items-center justify-center gap-2 decoration-none ${theme === 'light'
+                                ? 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-sm'
+                                : 'bg-slate-800/40 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white hover:border-slate-700 shadow-md'
+                            }`}
+                        whileHover={{ y: -3, scale: 1.02 }}
+                        whileTap={{ scale: 0.97 }}
+                        style={{ transform: "translateZ(15px)" }}
                     >
-                        <FontAwesomeIcon icon={faArrowRight} size="lg" />
-                    </motion.span>
-                </motion.a>
+                        <span>Repository Archive</span>
+                        <FontAwesomeIcon icon={faGithub} className="text-base" />
+                    </motion.a>
+
+                    <motion.a
+                        href={project?.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 h-12 w-full rounded-xl font-bold text-sm tracking-wide bg-gradient-to-r from-[#9929fb] via-[#ba52ff] to-[#cc59ff] text-white shadow-md inline-flex items-center justify-center gap-2 decoration-none relative overflow-hidden group/btn"
+                        whileHover={{ y: -3, scale: 1.02, boxShadow: "0 10px 25px rgba(153, 41, 251, 0.4)" }}
+                        whileTap={{ scale: 0.97 }}
+                        style={{ transform: "translateZ(15px)" }}
+                    >
+                        {/* Shine Swipe Accent Transition lines effect on hover */}
+                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -translateX-full group-hover/btn:translate-x-full transition-transform duration-1000 ease-out" />
+
+                        <span className="relative z-10">Deployment Live</span>
+                        <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="text-xs relative z-10" />
+                    </motion.a>
+                </motion.div>
+
             </div>
         </motion.div>
     );

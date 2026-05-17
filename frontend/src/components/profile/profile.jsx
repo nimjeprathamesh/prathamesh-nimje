@@ -1,279 +1,249 @@
 import { useContext } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import SocialMedia from "../common/socialMedia/SocialMedia";
 import { MyContext } from "../../Context/Context";
 
+// Heading character stagger animations configs
+const splitText = (text) => {
+  return text.split('').map((char, index) => (
+    <motion.span
+      key={index}
+      style={{ display: 'inline-block' }}
+      variants={{
+        hidden: { opacity: 0, y: 20, rotateX: -60 },
+        visible: { opacity: 1, y: 0, rotateX: 0 }
+      }}
+      transition={{ type: "spring", stiffness: 150, damping: 15 }}
+    >
+      {char === ' ' ? '\u00A0' : char}
+    </motion.span>
+  ));
+};
+
 const Profile = () => {
   const { theme } = useContext(MyContext);
 
-  // Animation variants
+  // Parallax background scroll tracking hooks for scroll interactions
+  const { scrollYProgress } = useScroll({
+    target: { current: document.getElementById('profile') },
+    offset: ["start end", "end start"]
+  });
+
+  const imgScale = useTransform(scrollYProgress, [0, 0.5], [1.1, 1]);
+
   const containerVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-        staggerChildren: 0.2
-      }
+      transition: { staggerChildren: 0.12, delayChildren: 0.1 }
     }
   };
 
-  const imageVariants = {
-    hidden: { opacity: 0, scale: 0.8, x: -50 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      x: 0,
-      transition: {
-        duration: 0.7,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const socialMediaVariants = {
+  const fadeInUpVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.6,
-        delay: 0.3,
-        ease: "easeOut"
-      }
+      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] }
     }
   };
 
-  const contentVariants = {
-    hidden: { opacity: 0, x: 50 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.7,
-        ease: "easeOut",
-        staggerChildren: 0.15
-      }
-    }
-  };
-
-  const headingVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const paragraphVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const techListVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.3
-      }
-    }
-  };
-
-  const techItemVariants = {
-    hidden: { opacity: 0, x: -10 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.4
-      }
-    }
-  };
-
-  const buttonVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
+  const badgeVariants = {
+    hidden: { opacity: 0, scale: 0.85, y: 10 },
+    visible: (i) => ({
       opacity: 1,
       scale: 1,
+      y: 0,
+      transition: { delay: i * 0.03, type: "spring", stiffness: 160, damping: 18 }
+    })
+  };
+
+  // PREMIUM CONTINUOUS INFINITE LOOPS 🚀
+  const continuousFloatAnimation = {
+    animate: {
+      y: [0, -10, 3, -7, 0],
+      rotateX: [0, 2, -2, 1, 0],
+      rotateY: [0, -3, 2, -1, 0],
       transition: {
-        duration: 0.5,
-        ease: "easeOut"
+        duration: 8,
+        repeat: Infinity,
+        ease: "easeInOut"
       }
-    },
-    hover: {
-      scale: 1.05,
+    }
+  };
+
+  const continuousHaloAnimation = {
+    animate: {
+      scale: [1, 1.05, 0.96, 1.02, 1],
+      opacity: [0.15, 0.28, 0.12, 0.25, 0.15],
       transition: {
-        duration: 0.3
+        duration: 6,
+        repeat: Infinity,
+        ease: "easeInOut"
       }
-    },
-    tap: {
-      scale: 0.95
     }
   };
 
   const technologies = [
     "HTML5", "JavaScript", "React.js", "Git/Github", "Material UI",
     "CSS3", "Node.js", "Next.js", "Tailwind", "React Native",
-    "UI/UX", "MySQL", "Digitalocean", "Vercel", "Express.js"
+    "UI/UX", "MySQL", "DigitalOcean", "Vercel", "Express.js"
   ];
 
   return (
     <motion.div
-      className={`relative mx-4 xxl:mx-0.5 -bottom-20 lg:-bottom-28 z-10 rounded-2xl drop-shadow-2xl max-xl:mb-5 xl:p-28 lg:p-20 md:p-16 sm:p-10 p-4 ${
+      className={`relative mx-4 xxl:mx-0 rounded-3xl p-8 md:p-16 lg:p-20 shadow-2xl border transition-all duration-700 ${
         theme === 'light' 
-          ? 'bg-white shadow-white' 
-          : 'bg-gray-900 shadow-gray-900'
+          ? 'bg-white/90 backdrop-blur-md border-slate-200/60 shadow-slate-100' 
+          : 'bg-slate-900/60 backdrop-blur-md border-slate-800/80 shadow-[0_20px_50px_rgba(0,0,0,0.4)]'
       }`}
       id="profile"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.15 }}
       variants={containerVariants}
     >
-      <div className="flex max-md:flex-col justify-between items-center gap-6">
-        {/* Profile image */}
-        <motion.div 
-          className="xxl:max-w-106 w-auto h-auto xxl:max-h-126"
-          variants={imageVariants}
-        >
+      {/* Background Decorative Cosmic Mesh Orbs */}
+      <div className="absolute -top-12 -left-12 w-64 h-64 bg-[#9929fb]/10 blur-3xl rounded-full pointer-events-none" />
+      <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-[#ff9f1c]/10 blur-3xl rounded-full pointer-events-none" />
+
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
+        
+        {/* Left Column: Image with Continuous Micro-Orbit Frame */}
+        <div className="w-full lg:w-5/12 flex flex-col items-center relative group shrink-0" style={{ perspective: 1200 }}>
+          
+          {/* Infinite Pulsing Halo Ambient Effect */}
           <motion.div 
-            className="max-w-106 h-117 object-fill overflow-hidden rounded-xl"
-            whileHover={{ scale: 1.03 }}
-            transition={{ duration: 0.3 }}
+            className="absolute -inset-2 bg-gradient-to-tr from-[#ff9f1c] via-[#cc59ff] to-[#9929fb] blur-3xl rounded-2xl"
+            variants={continuousHaloAnimation}
+            animate="animate"
+          />
+
+          {/* Premium Infinite Float Base Container */}
+          <motion.div 
+            className="relative max-w-[350px] md:max-w-[370px] aspect-[4/5] w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-slate-950/40"
+            style={{ transformStyle: "preserve-3d" }}
+            variants={continuousFloatAnimation}
+            animate="animate"
+            whileHover={{
+              scale: 1.02,
+              boxShadow: theme === 'dark' 
+                ? '0 25px 50px rgba(153, 41, 251, 0.2)' 
+                : '0 25px 50px rgba(0, 0, 0, 0.1)'
+            }}
           >
             <motion.img
-              className={`h-[120%] object-cover ${
-                theme === 'light' ? 'bg-soft-white' : 'bg-gray-700'
+              className={`w-full h-full object-cover transition-all duration-700 select-none ${
+                theme === 'light' ? 'bg-white' : 'bg-slate-950'
               }`}
               src="./pratham.png"
-              alt="Prathamesh Nimje"
-              initial={{ scale: 1.1 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.8 }}
+              alt="Prathamesh Nimje Continuous Profile Visual"
+              style={{ scale: imgScale }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.4 }}
             />
-          </motion.div>
-          
-          {/* Social media section */}
-          <motion.div 
-            className="relative bottom-9"
-            variants={socialMediaVariants}
-          >
-            <div className="flex justify-center">
-              <motion.div 
-                className={`px-6 max-w-66 py-3 z-50 text-center rounded-[4px] center shadow-2xl drop-shadow-2xl ${
-                  theme === 'light' 
-                    ? 'bg-white shadow-white' 
-                    : 'bg-gray-700 shadow-gray-900'
-                }`}
-                whileHover={{ y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
+
+            {/* Dynamic Glassmorphism Overlay for High-Contrast Icons */}
+            <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-transparent pointer-events-none z-10" />
+
+            {/* Floating Social Media Dock Bar */}
+            <div className="absolute bottom-6 inset-x-4 z-20 flex justify-center items-center">
+              <div className="w-full max-w-[240px] px-4 py-3 rounded-xl border border-white/20 bg-slate-900/85 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex justify-center items-center text-white">
                 <SocialMedia position="center" />
-              </motion.div>
+              </div>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
 
-        <motion.div 
-          className="max-sm:w-full w-[33rem]"
-          variants={contentVariants}
-        >
+        {/* Right Column: Text Layout & Grid Badges Section */}
+        <div className="w-full lg:w-7/12 flex flex-col space-y-6">
           <motion.h2
-            className={`text-2xl xxs:text-3xl sm:text-4xl lg:text-[38px] text-[min(24px,38px)] max-md:text-center font-semibold mb-8 ${
-              theme === 'dark' ? 'text-white' : 'text-black'
+            className={`text-3xl md:text-4xl lg:text-5xl font-black tracking-tight max-lg:text-center ${
+              theme === 'dark' ? 'text-white' : 'text-slate-900'
             }`}
-            variants={headingVariants}
+            variants={containerVariants}
           >
-            I am a Full Stack Developer
+            {splitText("About Me")} <br />
+            <span className="bg-gradient-to-r from-[#9929fb] via-[#cc59ff] to-[#ff9f1c] bg-clip-text text-transparent">
+              Prathamesh
+            </span>
           </motion.h2>
 
-          <motion.div
-            className={`text-xs xs:text-[16px] lg:text-lg font-normal max-md:text-center ${
-              theme === 'light' ? 'text-gray-600' : 'text-gray-300'
+          <motion.p
+            className={`text-base md:text-lg leading-relaxed max-lg:text-center font-normal ${
+              theme === 'light' ? 'text-slate-600' : 'text-slate-300'
             }`}
-            variants={paragraphVariants}
+            variants={fadeInUpVariants}
           >
-            <motion.p variants={paragraphVariants}>
-              Hello! My name is Prathamesh Nimje and I enjoy creating things that live on the internet. My interest in web development started back in 2020 when I decided to try editing custom Tumblr themes — turns out hacking together a custom reblog button taught me a lot about HTML & CSS!
-            </motion.p>
+            Hello! My name is Prathamesh Nimje and I enjoy creating things that live on the internet. My interest in web development started back in 2020 when I decided to try editing custom Tumblr themes — turns out hacking together a custom reblog button taught me a lot about HTML & CSS!
+          </motion.p>
 
-            <motion.div variants={paragraphVariants}>
-              <p className="mt-3">
-                Here are a few technologies I have been working with recently:
-              </p>
-              <motion.ul 
-                className="list-disc list-inside mt-2" 
-                style={{ columns: 3 }}
-                variants={techListVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-              >
-                {technologies.map((tech, index) => (
-                  <motion.li 
-                    key={index}
-                    variants={techItemVariants}
-                    whileHover={{ 
-                      x: 5,
-                      color: "#8B5CF6",
-                      transition: { duration: 0.2 }
-                    }}
-                  >
-                    {tech}
-                  </motion.li>
-                ))}
-              </motion.ul>
-            </motion.div>
+          {/* Modern Responsive Grid Badges Layout */}
+          <motion.div className="space-y-3" variants={fadeInUpVariants}>
+            <p className={`text-xs font-bold tracking-widest uppercase max-lg:text-center ${
+              theme === 'light' ? 'text-slate-400' : 'text-slate-500'
+            }`}>
+              Core Technologies & Tools
+            </p>
+            
+            <div className="flex flex-wrap gap-2.5 max-lg:justify-center">
+              {technologies.map((tech, index) => (
+                <motion.span
+                  key={index}
+                  custom={index}
+                  variants={badgeVariants}
+                  className={`text-xs md:text-sm font-semibold px-4 py-2 rounded-xl border cursor-pointer transition-colors ${
+                    theme === 'light'
+                      ? 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-[#9929fb]/5 hover:text-[#9929fb] hover:border-[#9929fb]/30'
+                      : 'bg-slate-800/40 border-slate-800 text-slate-300 hover:bg-[#9929fb]/10 hover:text-[#cc59ff] hover:border-[#9929fb]/40'
+                  }`}
+                  whileHover={{ 
+                    y: -3, 
+                    scale: 1.03,
+                    boxShadow: "0 8px 20px rgba(153, 41, 251, 0.15)"
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  {tech}
+                </motion.span>
+              ))}
+            </div>
           </motion.div>
 
+          {/* Call To Action Buttons Hub Row */}
           <motion.div 
-            className="mt-8 flex max-md:justify-center"
-            variants={buttonVariants}
+            className="flex flex-wrap items-center gap-4 pt-4 max-lg:justify-center"
+            variants={fadeInUpVariants}
           >
             <motion.a
-              className="btn xxs:btn-lg px-6 max-xs:px-2 xxs:py-3 btn-primary text-xs xxs:text-[14px] sm:text-[16px]"
-              href="https://github.com/nimjeprathamesh/nimjeprathamesh"
+              className="btn btn-premium btn-md rounded-xl px-6 shadow-xl text-white font-bold tracking-wide decoration-none"
+              href="https://github.com/nimjeprathamesh"
               target="_blank"
               rel="noopener noreferrer"
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
             >
               My Projects
             </motion.a>
+            
             <motion.a
-              className={`btn xxs:btn-lg px-6 max-xs:px-2 xxs:py-3 hover:border-picto-primary duration-300 transition-all hover:text-picto-primary ms-4 text-xs xxs:text-[14px] sm:text-[16px] ${
+              className={`btn btn-md rounded-xl px-6 font-bold tracking-wide border transition-all decoration-none ${
                 theme === 'light' 
-                  ? 'bg-white text-black' 
-                  : 'bg-gray-700 text-white border-gray-600'
+                  ? 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50 hover:border-slate-400 shadow-sm' 
+                  : 'bg-slate-800/60 border-slate-700 text-white hover:bg-slate-800 hover:border-slate-600 shadow-md'
               }`}
               href="./Prathamesh_Nimje_Resume.pdf"
               download="Prathamesh_Nimje_Resume.pdf"
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
             >
-              <FontAwesomeIcon icon={faDownload} /> Download CV
+              <FontAwesomeIcon icon={faDownload} className="mr-2" /> Download CV
             </motion.a>
           </motion.div>
-        </motion.div>
+        </div>
+
       </div>
     </motion.div>
   );

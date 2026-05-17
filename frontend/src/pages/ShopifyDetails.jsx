@@ -1,113 +1,63 @@
 import { useParams } from 'react-router-dom';
 import { useContext } from "react";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpRightFromSquare, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { MyContext } from '../Context/Context';
-import { shopifyDetailsData } from '../utils/constants';
+import { shopifyDetailsData } from '../utils/constants'; 
 
-export default function ShopifyDetails() {
+export default function ShopifyAppDetails() {
     const { id } = useParams();
     const { theme } = useContext(MyContext);
-    const project = shopifyDetailsData.find((project) => project.id === parseInt(id));
+    const project = shopifyDetailsData.find((proj) => proj.id === parseInt(id));
 
-    // Animation variants (same as ProjectDetails)
     const containerVariants = {
-        hidden: {},
+        hidden: { opacity: 0 },
         visible: {
-            transition: {
-                staggerChildren: 0.2
-            }
-        }
+          opacity: 1,
+          transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+        },
     };
 
-    const imageVariants = {
-        hidden: { 
-            opacity: 0,
-            rotateY: 90,
-            scale: 0.8
-        },
-        visible: {
-            opacity: 1,
-            rotateY: 0,
-            scale: 1,
-            transition: {
-                duration: 0.8,
-                ease: "easeOut"
-            }
-        }
-    };
-
-    const infoCardVariants = {
-        hidden: { 
-            opacity: 0, 
-            scale: 0.5,
-            rotate: -10
-        },
-        visible: {
-            opacity: 1,
-            scale: 1,
-            rotate: 0,
-            transition: {
-                duration: 0.7,
-                ease: [0.6, 0.05, 0.01, 0.9]
-            }
-        }
-    };
-
-    const descriptionVariants = {
-        hidden: { 
-            opacity: 0,
-            x: -100,
-            skewX: -10
-        },
-        visible: {
-            opacity: 1,
-            x: 0,
-            skewX: 0,
-            transition: {
-                duration: 0.6,
-                ease: "easeOut"
-            }
-        }
-    };
-
-    const bulletVariants = {
-        hidden: { 
-            opacity: 0, 
-            x: 100,
-            rotate: 5
-        },
-        visible: (index) => ({
-            opacity: 1,
-            x: 0,
-            rotate: 0,
-            transition: {
-                duration: 0.5,
-                delay: index * 0.08,
-                ease: [0.25, 0.46, 0.45, 0.94]
-            }
-        })
-    };
-
-    const buttonVariants = {
-        hidden: { 
-            opacity: 0,
-            y: 50,
-            scale: 0.8
-        },
+    const headerSectionVariants = {
+        hidden: { opacity: 0, y: 30 },
         visible: {
             opacity: 1,
             y: 0,
-            scale: 1,
-            transition: {
-                duration: 0.5,
-                type: "spring",
-                stiffness: 100,
-                damping: 10
-            }
-        }
+            transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+        },
     };
+
+    const logoVariants = {
+        hidden: { opacity: 0, scale: 0.6, rotate: -45 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            rotate: 0,
+            transition: { type: "spring", stiffness: 140, damping: 14 },
+        },
+        hover: {
+            scale: 1.08,
+            rotate: 4,
+            transition: { duration: 0.3 },
+        },
+    };
+
+    const bulletPointVariants = {
+        hidden: { opacity: 0, x: -15, filter: "blur(4px)" },
+        visible: (i) => ({
+            opacity: 1,
+            x: 0,
+            filter: "blur(0px)",
+            transition: {
+                delay: i * 0.04,
+                duration: 0.5,
+                ease: "easeOut",
+            },
+        }),
+    };
+
+    const shopifyGlow = "rgba(16, 185, 129, 0.16)";
 
     const renderDescription = (description) => {
         if (!description) return null;
@@ -118,21 +68,24 @@ export default function ShopifyDetails() {
 
         while (i < lines.length) {
             const line = lines[i].trim();
-            
+
             if (line.endsWith(':')) {
                 elements.push(
-                    <motion.p
+                    <motion.h3
                         key={`header-${i}`}
-                        variants={descriptionVariants}
-                        initial="hidden"
-                        animate="visible"
-                        className={`font-semibold text-base sm:text-lg mt-4 mb-2 ${theme === 'light' ? 'text-black' : 'text-white'}`}
+                        className={`text-lg sm:text-xl font-black mt-8 mb-4 tracking-tight border-l-4 border-emerald-500 pl-3 ${
+                            theme === 'light' ? 'text-slate-900' : 'text-white'
+                        }`}
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{ duration: 0.4 }}
                     >
-                        {line}
-                    </motion.p>
+                        {line.slice(0, -1)}
+                    </motion.h3>
                 );
                 i++;
-                
+
                 const bulletPoints = [];
                 while (i < lines.length && !lines[i].trim().endsWith(':') && !lines[i].includes('?')) {
                     if (lines[i].trim()) {
@@ -140,43 +93,39 @@ export default function ShopifyDetails() {
                     }
                     i++;
                 }
-                
+
                 if (bulletPoints.length > 0) {
                     elements.push(
                         <motion.div
                             key={`bullets-${i}`}
-                            className='flex flex-col gap-2 mb-4'
+                            className={`grid grid-cols-1 gap-3 p-5 rounded-2xl border ${
+                                theme === 'light' 
+                                    ? 'bg-slate-50/60 border-slate-200/80' 
+                                    : 'bg-slate-950/30 border-slate-800/50 backdrop-blur-md'
+                            }`}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.15 }}
+                            variants={{
+                                visible: { transition: { staggerChildren: 0.05 } }
+                            }}
                         >
                             {bulletPoints.map((point, idx) => (
                                 <motion.div
+                                    className="flex items-start gap-3"
                                     key={idx}
                                     custom={idx}
-                                    variants={bulletVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    whileHover={{
-                                        x: 10,
-                                        scale: 1.02,
-                                        transition: { duration: 0.2 }
-                                    }}
-                                    className='flex gap-3 cursor-default'
+                                    variants={bulletPointVariants}
+                                    whileHover={{ x: 3 }}
                                 >
-                                    <motion.span 
-                                        className={`${theme === 'light' ? 'text-blue-600' : 'text-blue-400'} font-bold text-lg sm:text-xl flex-shrink-0`}
-                                        animate={{
-                                            rotate: [0, -10, 10, -10, 0],
-                                            scale: [1, 1.2, 1]
-                                        }}
-                                        transition={{
-                                            duration: 2,
-                                            repeat: Infinity,
-                                            repeatDelay: 3,
-                                            delay: idx * 0.5
-                                        }}
-                                    >
-                                        »
-                                    </motion.span>
-                                    <p className={`flex-1 text-sm sm:text-base ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}>{point}</p>
+                                    <span className="text-emerald-500 text-xs sm:text-sm mt-1 flex-shrink-0">
+                                        <FontAwesomeIcon icon={faChevronRight} />
+                                    </span>
+                                    <p className={`m-0 text-sm sm:text-base leading-relaxed ${
+                                        theme === 'light' ? 'text-slate-700' : 'text-slate-300'
+                                    }`}>
+                                        {point.startsWith('-') || point.startsWith('»') ? point.substring(1).trim() : point}
+                                    </p>
                                 </motion.div>
                             ))}
                         </motion.div>
@@ -186,10 +135,13 @@ export default function ShopifyDetails() {
                 elements.push(
                     <motion.p
                         key={`para-${i}`}
-                        variants={descriptionVariants}
-                        initial="hidden"
-                        animate="visible"
-                        className={`text-justify mb-4 text-sm sm:text-base ${theme === 'light' ? 'text-gray-900' : 'text-gray-300'}`}
+                        className={`text-justify mb-5 text-sm sm:text-base leading-relaxed ${
+                            theme === 'light' ? 'text-slate-700' : 'text-slate-300'
+                        }`}
+                        initial={{ opacity: 0, y: 15 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.5 }}
                     >
                         {line}
                     </motion.p>
@@ -201,98 +153,85 @@ export default function ShopifyDetails() {
         return elements;
     };
 
+    if (!project) {
+        return (
+            <div className={`w-full min-h-screen flex items-center justify-center ${theme === 'light' ? 'bg-slate-50 text-slate-900' : 'bg-slate-900 text-white'}`}>
+                <p className="text-lg font-bold">Project Details Not Found</p>
+            </div>
+        );
+    }
+
     return (
         <motion.div
+            className={`w-full min-h-screen transition-colors duration-500 flex flex-col items-center py-16 sm:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden ${
+                theme === 'light' ? 'bg-slate-50' : 'bg-slate-900'
+            }`}
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className={`flex flex-col items-center gap-6 sm:gap-10 py-6 sm:py-10 px-4 sm:px-8 md:px-16 lg:px-32 ${theme === 'light' ? 'bg-white text-black' : 'bg-gray-900 text-white'}`}
         >
-            <motion.img
-                variants={imageVariants}
-                whileHover={{ 
-                    scale: 1.05,
-                    rotate: [0, -2, 2, -2, 0],
-                    transition: { duration: 0.5 }
-                }}
-                src={project?.image}
-                alt={`${project?.image} image`}
-                className={`w-full max-w-sm sm:max-w-md lg:max-w-2xl mx-auto shadow-xl ${theme === 'light' ? 'shadow-[#aaa]' : 'shadow-gray-800'} rounded-xl`}
-            />
-            
-            <motion.div
-                variants={infoCardVariants}
-                className='flex flex-col sm:flex-row justify-evenly items-center py-4 sm:py-5 w-full gap-4 sm:gap-0'
-            >
-                <motion.img
-                    whileHover={{ 
-                        scale: 1.2, 
-                        rotate: [0, 360],
-                        transition: { duration: 0.6 }
-                    }}
-                    src={project?.logo}
-                    alt={`${project?.image} image`}
-                    className={`w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 shadow-xl ${theme === 'light' ? 'shadow-[#aaa]' : 'shadow-gray-800'} rounded-xl flex-shrink-0`}
-                />
-                
-                <div className='flex flex-col justify-center items-start text-center sm:text-left'>
-                    <motion.h1
-                        initial={{ opacity: 0, y: -20, scale: 0.8 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                        className={`font-bold text-2xl sm:text-3xl ${theme === 'light' ? 'text-black' : 'text-white'}`}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1000px] h-[400px] rounded-full pointer-events-none opacity-40 blur-[130px] z-0" style={{ backgroundColor: shopifyGlow }} />
+
+            <div className="w-full max-w-4xl space-y-12 relative z-10">
+                {/* 1. App Cover Stage */}
+                <div className="perspective-[1200px] w-full flex justify-center">
+                    <motion.div
+                        className={`w-full max-w-2xl aspect-[16/10] overflow-hidden rounded-3xl border shadow-2xl relative ${
+                            theme === 'light' ? 'bg-white border-slate-200' : 'bg-slate-950 border-slate-800'
+                        }`}
+                        whileHover={{ y: -6, scale: 1.02, rotateX: -2, rotateY: 2, boxShadow: `0 30px 60px ${shopifyGlow}` }}
+                        style={{ transformStyle: "preserve-3d" }}
+                        transition={{ duration: 0.4, ease: "easeOut" }}
                     >
-                        {project.title}
-                    </motion.h1>
-                    <motion.p
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 0.4 }}
-                        className={`text-base sm:text-xl ${theme === 'light' ? 'text-gray-600' : 'text-gray-300'}`}
-                    >
-                        {project.short_desc}
-                    </motion.p>
+                        <img src={project?.image} alt="mockup" className="w-full h-full object-cover select-none" />
+                    </motion.div>
                 </div>
-                
-                <motion.a
-                    href={project?.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variants={buttonVariants}
-                    whileHover={{ 
-                        scale: 1.1,
-                        boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.3)",
-                        transition: { duration: 0.3 }
-                    }}
-                    whileTap={{ 
-                        scale: 0.9,
-                        rotate: 5
-                    }}
-                    className={`btn hover:border-picto-primary hover:text-picto-primary text-sm xs:text-[16px] font-semibold hover:gap-3 xs:hover:gap-4 transition-all duration-300 py-2 px-6 w-full sm:w-auto text-center mt-2 sm:mt-5 inline-block ${theme === 'light' ? 'bg-white text-gray-900 hover:bg-gray-50' : 'bg-gray-700 text-white hover:bg-gray-600'}`}
+
+                {/* 2. Bento Control Block */}
+                <motion.div
+                    className={`w-full p-6 sm:p-8 rounded-3xl border flex flex-col md:flex-row items-center justify-between gap-6 ${
+                        theme === 'light' ? 'bg-white border-slate-200 shadow-lg shadow-slate-100' : 'bg-slate-950/40 border-slate-800/80 backdrop-blur-md shadow-2xl'
+                    }`}
+                    variants={headerSectionVariants}
+                    style={{ transformStyle: "preserve-3d", perspective: 1000 }}
                 >
-                    Live Link
-                    <motion.span
-                        className="ms-1 xs:ms-3 inline-block"
-                        animate={{
-                            x: [0, 5, 0]
-                        }}
-                        transition={{
-                            duration: 1.5,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
+                    <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left" style={{ transform: "translateZ(20px)" }}>
+                        {/* LINKED INITIAL STATE PROPERLY HERE TO FIX VISIBILITY 🛠️ */}
+                        <motion.img
+                            src={project?.logo}
+                            alt="logo"
+                            className={`w-16 h-16 sm:w-20 sm:h-20 object-contain rounded-2xl shadow-md p-2 bg-slate-900 border ${theme === 'light' ? 'border-slate-200 bg-white' : 'border-slate-800 bg-slate-950'}`}
+                            variants={logoVariants}
+                            initial="hidden"
+                            animate="visible"
+                            whileHover="hover"
+                        />
+                        <div className="space-y-1">
+                            <h1 className={`font-black text-2xl sm:text-3xl tracking-tight m-0 ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>{project?.title}</h1>
+                            <p className={`text-sm sm:text-base font-medium m-0 ${theme === 'light' ? 'text-slate-500' : 'text-slate-400'}`}>{project?.short_desc || "Shopify App Store Solution"}</p>
+                        </div>
+                    </div>
+
+                    <motion.a
+                        href={project?.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="h-11 px-6 rounded-xl font-bold text-sm tracking-wide bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md inline-flex items-center justify-center gap-2 decoration-none flex-shrink-0 relative overflow-hidden group/btn"
+                        whileHover={{ y: -2, boxShadow: "0 8px 20px rgba(16, 185, 129, 0.4)" }}
+                        whileTap={{ scale: 0.96 }}
+                        style={{ transform: "translateZ(15px)" }}
                     >
-                        <FontAwesomeIcon icon={faArrowRight} size="lg" />
-                    </motion.span>
-                </motion.a>
-            </motion.div>
-            
-            <motion.div
-                variants={containerVariants}
-                className="w-full max-w-4xl"
-            >
-                {renderDescription(project?.description)}
-            </motion.div>
+                        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-white/0 via-white/20 to-white/0 transform -translateX-full group-hover/btn:translate-x-full transition-transform duration-1000 ease-out" />
+                        <span className="relative z-10">Live Storefront App</span>
+                        <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="text-[10px] relative z-10" />
+                    </motion.a>
+                </motion.div>
+
+                {/* 3. Description Content */}
+                <div className="w-full relative z-10">
+                    {renderDescription(project?.description)}
+                </div>
+            </div>
         </motion.div>
     );
 }
