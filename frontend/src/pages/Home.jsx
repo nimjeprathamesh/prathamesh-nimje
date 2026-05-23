@@ -10,8 +10,6 @@ import "../../index.css";
 import { MyContext } from "../Context/Context";
 import { ToastContainer } from "react-toastify";
 import Profile from "../components/profile/profile";
-/* IMPORT HO GAYA CURSOR TRAIL COMPONENT ENGINE HERE 🛠️ */
-import CursorTrail from "../components/common/CursorTrail";
 
 const Home = () => {
   const { theme } = useContext(MyContext);
@@ -49,8 +47,6 @@ const Home = () => {
       animate="visible"
       variants={pageWrapperVariants}
     >
-      {/* GLOBAL HIGH-FIDELITY DYNAMIC CURSOR TRAIL STREAM ENGINE LAYER */}
-      {/* <CursorTrail /> */}
 
       {/* Background Soft Ambient Mesh Glows */}
       <div className="absolute top-[10%] left-[-10%] w-[600px] h-[600px] bg-[#9929fb]/3 blur-[160px] rounded-full pointer-events-none select-none" />

@@ -1,0 +1,10 @@
+{
+  "appId": "com.myportfolio.app",
+  "appName": "portfolio",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}

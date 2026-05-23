@@ -45,29 +45,31 @@ const Contact = () => {
 
   return (
     <motion.div
-      className="relative -bottom-10 -mt-10 z-10 px-4 w-full max-w-[1320px] mx-auto"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+    // -bottom-10 aur -mt-10 ko responsive banaya taaki mobile par layout break na ho
+    className="relative md:-bottom-10 md:-mt-10 z-10 px-4 w-full max-w-[1320px] mx-auto pb-10 lg:pb-0"
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.15 }}
+    transition={{ duration: 0.8, ease: "easeOut" }}
+  >
+    {/* 3D Parallax Main Box */}
+    <motion.div
+      id="contact"
+      // p-6 ko explicit mobile padding di hai taaki internal content niche overflow na kare
+      className={`w-full p-6 md:p-12 lg:p-16 rounded-3xl border transition-all duration-700 ${
+        theme === 'light' 
+          ? 'bg-white/90 border-slate-200/80 shadow-[0_20px_50px_rgba(0,0,0,0.05)]' 
+          : 'bg-slate-950/40 border-slate-800/60 shadow-[0_25px_60px_rgba(0,0,0,0.4)] backdrop-blur-md'
+      }`}
+      whileHover={{
+        rotateX: 2,
+        rotateY: -2,
+        boxShadow: theme === 'dark' 
+          ? '0 30px 70px rgba(153, 41, 251, 0.15)' 
+          : '0 30px 70px rgba(0, 0, 0, 0.08)'
+      }}
+      style={{ transformStyle: "preserve-3d", perspective: 1200 }}
     >
-      {/* 3D Parallax Main Box */}
-      <motion.div
-        id="contact"
-        className={`w-full p-6 md:p-12 lg:p-16 rounded-3xl border transition-all duration-700 ${
-          theme === 'light' 
-            ? 'bg-white/90 border-slate-200/80 shadow-[0_20px_50px_rgba(0,0,0,0.05)]' 
-            : 'bg-slate-950/40 border-slate-800/60 shadow-[0_25px_60px_rgba(0,0,0,0.4)] backdrop-blur-md'
-        }`}
-        whileHover={{
-          rotateX: 2,
-          rotateY: -2,
-          boxShadow: theme === 'dark' 
-            ? '0 30px 70px rgba(153, 41, 251, 0.15)' 
-            : '0 30px 70px rgba(0, 0, 0, 0.08)'
-        }}
-        style={{ transformStyle: "preserve-3d", perspective: 1200 }}
-      >
         <div className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-16" style={{ transformStyle: "preserve-3d" }}>
           
           {/* Left Column: Copywriting & Address Blocks */}
