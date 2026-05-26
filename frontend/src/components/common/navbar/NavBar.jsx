@@ -7,6 +7,7 @@ import { TiWeatherSunny } from "react-icons/ti";
 import { IoMoonOutline } from "react-icons/io5";
 import { MyContext } from "../../../Context/Context";
 import { navItems } from "../../../utils/constants.jsx";
+import { Browser } from '@capacitor/browser';
 
 const NavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -39,20 +40,18 @@ const NavBar = () => {
   const renderDesktopNavLink = (item) => {
     const isRouterLink = item.url.startsWith("/");
 
-    const commonClasses = `text-sm font-bold tracking-wide transition-all duration-300 rounded-xl relative group no-underline px-4 py-2 ${
-      theme === "light"
-        ? "text-slate-700 hover:text-black hover:bg-slate-100/50"
-        : "text-slate-300 hover:text-white hover:bg-slate-800/40"
-    }`;
+    const commonClasses = `text-sm font-bold tracking-wide transition-all duration-300 rounded-xl relative group no-underline px-4 py-2 ${theme === "light"
+      ? "text-slate-700 hover:text-black hover:bg-slate-100/50"
+      : "text-slate-300 hover:text-white hover:bg-slate-800/40"
+      }`;
 
     if (isRouterLink) {
       return (
         <RouterLink
           to={item.url}
           target="_blank"
-          className={`${commonClasses} ${
-            location.pathname === item.url ? "bg-[#9929fb]/10 text-[#9929fb]" : ""
-          }`}
+          className={`${commonClasses} ${location.pathname === item.url ? "bg-[#9929fb]/10 text-[#9929fb]" : ""
+            }`}
           onClick={() => setIsMobileMenuOpen(false)}
         >
           {item.name}
@@ -82,20 +81,18 @@ const NavBar = () => {
   const renderMobileNavLink = (item) => {
     const isRouterLink = item.url.startsWith("/");
 
-    const commonClasses = `text-sm font-bold tracking-wide transition-all duration-300 rounded-xl no-underline py-3 px-5 ${
-      theme === "light"
-        ? "text-slate-700 hover:text-black hover:bg-slate-100/50"
-        : "text-slate-300 hover:text-white hover:bg-slate-800/40"
-    }`;
+    const commonClasses = `text-sm font-bold tracking-wide transition-all duration-300 rounded-xl no-underline py-3 px-5 ${theme === "light"
+      ? "text-slate-700 hover:text-black hover:bg-slate-100/50"
+      : "text-slate-300 hover:text-white hover:bg-slate-800/40"
+      }`;
 
     if (isRouterLink) {
       return (
         <RouterLink
           to={item.url}
           target="_blank"
-          className={`${commonClasses} ${
-            location.pathname === item.url ? "bg-[#9929fb]/10 text-[#9929fb]" : ""
-          }`}
+          className={`${commonClasses} ${location.pathname === item.url ? "bg-[#9929fb]/10 text-[#9929fb]" : ""
+            }`}
           onClick={() => setIsMobileMenuOpen(false)}
           style={{ display: "block", width: "100%", textAlign: "left" }}
         >
@@ -121,23 +118,34 @@ const NavBar = () => {
     );
   };
 
+  const handleResumeOpen = async (e) => {
+    e.preventDefault();
+
+    const pdfUrl = `${window.location.origin}/Prathamesh_Nimje_Resume.pdf`;
+    console.log("window.location.origin", window.location.origin);
+    try {
+      await Browser.open({ url: pdfUrl });
+    } catch (error) {
+      window.open(pdfUrl, '_blank');
+    }
+  };
+
   return (
     <motion.nav
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-        theme === "light"
-          ? isScrolled
-            ? "bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm py-2"
-            : "bg-white/10 backdrop-blur-xs py-3.5"
-          : isScrolled
+      className={`sticky top-0 z-50 w-full transition-all duration-300 ${theme === "light"
+        ? isScrolled
+          ? "bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm py-2"
+          : "bg-white/10 backdrop-blur-xs py-3.5"
+        : isScrolled
           ? "bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 shadow-2xl py-2"
           : "bg-transparent py-3.5"
-      }`}
+        }`}
       variants={navbarVariants}
       initial="hidden"
       animate="visible"
     >
       <div className="w-full max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        
+
         {/* Left Branding Logo Section */}
         <ScrollLink
           to="introduction"
@@ -169,11 +177,10 @@ const NavBar = () => {
           <div className="flex items-center gap-3">
             <motion.button
               onClick={toggleTheme}
-              className={`p-2 rounded-xl border transition-all cursor-pointer ${
-                theme === "light"
-                  ? "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
-                  : "bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white"
-              }`}
+              className={`p-2 rounded-xl border transition-all cursor-pointer ${theme === "light"
+                ? "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
+                : "bg-slate-900 border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white"
+                }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -212,11 +219,10 @@ const NavBar = () => {
         <div className="flex lg:hidden items-center gap-3">
           <button
             onClick={toggleTheme}
-            className={`p-2 rounded-xl border transition-all ${
-              theme === "light"
-                ? "bg-slate-50 border-slate-200 text-slate-700"
-                : "bg-slate-900 border-slate-800 text-slate-300"
-            }`}
+            className={`p-2 rounded-xl border transition-all ${theme === "light"
+              ? "bg-slate-50 border-slate-200 text-slate-700"
+              : "bg-slate-900 border-slate-800 text-slate-300"
+              }`}
           >
             {theme === "light" ? (
               <IoMoonOutline size={18} />
@@ -227,11 +233,10 @@ const NavBar = () => {
 
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className={`p-2 rounded-xl transition-all border ${
-              theme === "dark"
-                ? "text-white border-slate-800 bg-slate-900/60"
-                : "text-slate-800 border-slate-200 bg-slate-50/60"
-            }`}
+            className={`p-2 rounded-xl transition-all border ${theme === "dark"
+              ? "text-white border-slate-800 bg-slate-900/60"
+              : "text-slate-800 border-slate-200 bg-slate-50/60"
+              }`}
           >
             <svg
               className="h-6 w-6"
@@ -267,11 +272,10 @@ const NavBar = () => {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className={`w-full overflow-hidden border-t lg:hidden relative z-50 shadow-inner ${
-              theme === "light"
-                ? "bg-white border-slate-200"
-                : "bg-slate-950 border-slate-800/80"
-            }`}
+            className={`w-full overflow-hidden border-t lg:hidden relative z-50 shadow-inner ${theme === "light"
+              ? "bg-white border-slate-200"
+              : "bg-slate-950 border-slate-800/80"
+              }`}
           >
             <div className="px-4 py-6">
 
@@ -304,6 +308,7 @@ const NavBar = () => {
               />
 
               <motion.a
+                onClick={handleResumeOpen}
                 href="/Prathamesh_Nimje_Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -324,7 +329,7 @@ const NavBar = () => {
                 }}
                 whileTap={{ scale: 0.97 }}
               >
-                Download Resume
+                View Resume
               </motion.a>
             </div>
           </motion.div>

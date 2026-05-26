@@ -5,7 +5,7 @@ export const MyContext = createContext();
 
 export const MyContextProvider = ({ children }) => {
     const [theme, setTheme] = useState(() => {
-        return localStorage.getItem('theme') || 'light';
+        return localStorage.getItem('theme') || 'dark';
     });
     const [formData, setFormData] = useState({
         name: '',
@@ -14,6 +14,7 @@ export const MyContextProvider = ({ children }) => {
         message: ''
     });
     const [loading, setLoading] = useState(false);
+
     const handleChange = (field) => (value) => {
         setFormData(prev => ({ ...prev, [field]: value }));
     };
