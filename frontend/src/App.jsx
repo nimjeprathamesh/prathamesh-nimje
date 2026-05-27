@@ -9,12 +9,18 @@ export default function App() {
 
     useEffect(() => {
         const setStatusBarStyle = async () => {
-            if (theme === 'dark') {
-                await StatusBar.setBackgroundColor({ color: '#0f172a' });
-                await StatusBar.setStyle({ style: Style.Dark });
+            const isNative = window.Capacitor && window.Capacitor.isNative;
+
+            if (isNative) {
+                if (theme === 'dark') {
+                    await StatusBar.setBackgroundColor({ color: '#0f172a' });
+                    await StatusBar.setStyle({ style: Style.Dark });
+                } else {
+                    await StatusBar.setBackgroundColor({ color: '#f8fafc' });
+                    await StatusBar.setStyle({ style: Style.Light });
+                }
             } else {
-                await StatusBar.setBackgroundColor({ color: '#f8fafc' });
-                await StatusBar.setStyle({ style: Style.Light });
+                return null
             }
         };
 

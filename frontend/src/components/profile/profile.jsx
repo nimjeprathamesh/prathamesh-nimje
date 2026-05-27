@@ -4,9 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import SocialMedia from "../common/socialMedia/SocialMedia";
 import { MyContext } from "../../Context/Context";
-import { Browser } from "@capacitor/browser";
+import { Filesystem, Directory } from '@capacitor/filesystem';
 
-// Heading character stagger animations configs
 const splitText = (text) => {
   return text.split('').map((char, index) => (
     <motion.span
@@ -27,14 +26,43 @@ const Profile = () => {
   const { theme } = useContext(MyContext);
 
   const handleDownloadCV = async (e) => {
-    e.preventDefault();
+    const isNative = window.Capacitor && window.Capacitor.isNative;
 
-    const pdfUrl = `${window.location.origin}/Prathamesh_Nimje_Resume.pdf`;
-    
-    try {
-      await Browser.open({ url: pdfUrl });
-    } catch (error) {
-      window.open(pdfUrl, '_blank');
+    if (isNative) {
+      e.preventDefault();
+
+      const pdfUrl = `${import.meta.env.VITE_FRONTEND_URL}/Prathamesh_Nimje_Resume.pdf`;
+
+      try {
+        const status = await Filesystem.checkPermissions();
+
+        if (status.publicStorage !== 'granted') {
+          const requestStatus = await Filesystem.requestPermissions();
+          if (requestStatus.publicStorage !== 'granted') {
+            alert("Storage permission is compulsory for downloading the CV.");
+            return;
+          }
+        }
+
+        const downloadResult = await Filesystem.downloadFile({
+          url: pdfUrl,
+          path: 'Prathamesh_Nimje_Resume.pdf',
+          directory: Directory.Downloads,
+        });
+
+        alert("CV Successfully Downloaded in your Downloads folder!");
+        console.log('Download complete path:', downloadResult.path);
+
+      } catch (error) {
+        console.error("Native download failed, switching to fallback:", error);
+
+        try {
+          const { Browser } = await import('@capacitor/browser');
+          await Browser.open({ url: pdfUrl });
+        } catch (browserError) {
+          window.open(pdfUrl, '_blank');
+        }
+      }
     }
   };
 
@@ -72,7 +100,6 @@ const Profile = () => {
     })
   };
 
-  // PREMIUM CONTINUOUS INFINITE LOOPS 🚀
   const continuousFloatAnimation = {
     animate: {
       y: [0, -10, 3, -7, 0],
@@ -107,8 +134,8 @@ const Profile = () => {
   return (
     <motion.div
       className={`relative mx-4 xxl:mx-0 rounded-3xl p-8 md:p-16 lg:p-20 shadow-2xl border transition-all duration-700 ${theme === 'light'
-          ? 'bg-white/90 backdrop-blur-md border-slate-200/60 shadow-slate-100'
-          : 'bg-slate-900/60 backdrop-blur-md border-slate-800/80 shadow-[0_20px_50px_rgba(0,0,0,0.4)]'
+        ? 'bg-white/90 backdrop-blur-md border-slate-200/60 shadow-slate-100'
+        : 'bg-slate-900/60 backdrop-blur-md border-slate-800/80 shadow-[0_20px_50px_rgba(0,0,0,0.4)]'
         }`}
       id="profile"
       initial="hidden"
@@ -116,23 +143,19 @@ const Profile = () => {
       viewport={{ once: true, amount: 0.15 }}
       variants={containerVariants}
     >
-      {/* Background Decorative Cosmic Mesh Orbs */}
       <div className="absolute -top-12 -left-12 w-64 h-64 bg-[#9929fb]/10 blur-3xl rounded-full pointer-events-none" />
       <div className="absolute -bottom-12 -right-12 w-64 h-64 bg-[#ff9f1c]/10 blur-3xl rounded-full pointer-events-none" />
 
       <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
 
-        {/* Left Column: Image with Continuous Micro-Orbit Frame */}
+        {/* Left Column */}
         <div className="w-full lg:w-5/12 flex flex-col items-center relative group shrink-0" style={{ perspective: 1200 }}>
-
-          {/* Infinite Pulsing Halo Ambient Effect */}
           <motion.div
             className="absolute -inset-2 bg-gradient-to-tr from-[#ff9f1c] via-[#cc59ff] to-[#9929fb] blur-3xl rounded-2xl"
             variants={continuousHaloAnimation}
             animate="animate"
           />
 
-          {/* Premium Infinite Float Base Container */}
           <motion.div
             className="relative max-w-[350px] md:max-w-[370px] aspect-[4/5] w-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-slate-950/40"
             style={{ transformStyle: "preserve-3d" }}
@@ -154,11 +177,7 @@ const Profile = () => {
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.4 }}
             />
-
-            {/* Dynamic Glassmorphism Overlay for High-Contrast Icons */}
             <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-transparent pointer-events-none z-10" />
-
-            {/* Floating Social Media Dock Bar */}
             <div className="absolute bottom-6 inset-x-4 z-20 flex justify-center items-center">
               <div className="w-full max-w-[240px] px-4 py-3 rounded-xl border border-white/20 bg-slate-900/85 backdrop-blur-lg shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex justify-center items-center text-white">
                 <SocialMedia position="center" />
@@ -167,7 +186,7 @@ const Profile = () => {
           </motion.div>
         </div>
 
-        {/* Right Column: Text Layout & Grid Badges Section */}
+        {/* Right Column */}
         <div className="w-full lg:w-7/12 flex flex-col space-y-6">
           <motion.h2
             className={`text-3xl md:text-4xl lg:text-5xl font-black tracking-tight max-lg:text-center ${theme === 'dark' ? 'text-white' : 'text-slate-900'
@@ -188,7 +207,6 @@ const Profile = () => {
             Hello! My name is Prathamesh Nimje and I enjoy creating things that live on the internet. My interest in web development started back in 2020 when I decided to try editing custom Tumblr themes — turns out hacking together a custom reblog button taught me a lot about HTML & CSS!
           </motion.p>
 
-          {/* Modern Responsive Grid Badges Layout */}
           <motion.div className="space-y-3" variants={fadeInUpVariants}>
             <p className={`text-xs font-bold tracking-widest uppercase max-lg:text-center ${theme === 'light' ? 'text-slate-400' : 'text-slate-500'
               }`}>
@@ -202,8 +220,8 @@ const Profile = () => {
                   custom={index}
                   variants={badgeVariants}
                   className={`text-xs md:text-sm font-semibold px-4 py-2 rounded-xl border cursor-pointer transition-colors ${theme === 'light'
-                      ? 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-[#9929fb]/5 hover:text-[#9929fb] hover:border-[#9929fb]/30'
-                      : 'bg-slate-800/40 border-slate-800 text-slate-300 hover:bg-[#9929fb]/10 hover:text-[#cc59ff] hover:border-[#9929fb]/40'
+                    ? 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-[#9929fb]/5 hover:text-[#9929fb] hover:border-[#9929fb]/30'
+                    : 'bg-slate-800/40 border-slate-800 text-slate-300 hover:bg-[#9929fb]/10 hover:text-[#cc59ff] hover:border-[#9929fb]/40'
                     }`}
                   whileHover={{
                     y: -3,
@@ -234,14 +252,16 @@ const Profile = () => {
               My Projects
             </motion.a>
 
+            {/* 🔴 FIX 3: Element ko tag button me hi transform rakha hai onClick handler logic bind karne ke liye */}
             <motion.a
-              className={`btn btn-md rounded-xl px-6 font-bold tracking-wide border transition-all decoration-none ${theme === 'light'
-                  ? 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50 hover:border-slate-400 shadow-sm'
-                  : 'bg-slate-800/60 border-slate-700 text-white hover:bg-slate-800 hover:border-slate-600 shadow-md'
+              className={`btn btn-md rounded-xl px-6 font-bold tracking-wide border transition-all ${theme === 'light'
+                ? 'bg-white border-slate-300 text-slate-800 hover:bg-slate-50 shadow-sm'
+                : 'bg-slate-800/60 border-slate-700 text-white hover:bg-slate-800 shadow-md'
                 }`}
               onClick={handleDownloadCV}
               href="./Prathamesh_Nimje_Resume.pdf"
               download="Prathamesh_Nimje_Resume.pdf"
+              style={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer', border: '1px solid currentColor' }}
               whileHover={{ scale: 1.03, y: -2 }}
               whileTap={{ scale: 0.97 }}
             >

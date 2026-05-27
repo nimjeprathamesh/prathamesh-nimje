@@ -121,8 +121,8 @@ const NavBar = () => {
   const handleResumeOpen = async (e) => {
     e.preventDefault();
 
-    const pdfUrl = `${window.location.origin}/Prathamesh_Nimje_Resume.pdf`;
-    console.log("window.location.origin", window.location.origin);
+    const pdfUrl = `${import.meta.env.VITE_FRONTEND_URL}/Prathamesh_Nimje_Resume.pdf`;
+
     try {
       await Browser.open({ url: pdfUrl });
     } catch (error) {
